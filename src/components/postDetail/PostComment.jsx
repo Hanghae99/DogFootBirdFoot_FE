@@ -17,6 +17,33 @@ const PostComment = (props) => {
             <CreateAt>2022-04-05 10:00:00</CreateAt>
           </CommentText>
         </Box>
+
+        <Box>
+          <Profile />
+          <CommentText>
+            <h3>duswo</h3>
+            <div>개발세발 댓글 테스트입니다 :)</div>
+            <CreateAt>2022-04-05 10:00:00</CreateAt>
+          </CommentText>
+        </Box>
+
+        <Box>
+          <Profile />
+          <CommentText>
+            <h3>duswo</h3>
+            <div>개발세발 댓글 테스트입니다 :)</div>
+            <CreateAt>2022-04-05 10:00:00</CreateAt>
+          </CommentText>
+        </Box>
+
+        <Box>
+          <Profile />
+          <CommentText>
+            <h3>duswo</h3>
+            <div>개발세발 댓글 테스트입니다 :)</div>
+            <CreateAt>2022-04-05 10:00:00</CreateAt>
+          </CommentText>
+        </Box>
       </TotalBox>
     </>
   );
@@ -76,7 +103,7 @@ const Button = styled.button`
 const Box = styled.div`
   display: flex;
   justify-content: left;
-  margin: 20px;
+  margin: 30px;
   padding: 30px;
   border-bottom: 0.5px solid;
   border-color: gray;

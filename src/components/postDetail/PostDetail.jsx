@@ -13,7 +13,7 @@ const PostDetail = (props) => {
           <Question>
             Python을 사용하면 구조화 된 스타일로 프로그래밍 할 수 있나요?
           </Question>
-          <Img src="https://cdn.codingworldnews.com/news/photo/202102/img_2446_0.jpg"></Img>
+          {/* <Img src="https://cdn.codingworldnews.com/news/photo/202102/img_2446_0.jpg"></Img> */}
         </div>
       </Box>
 
@@ -39,19 +39,20 @@ const Box = styled.div`
   padding: 30px;
 `;
 
-const Img = styled.img`
-  width: 500px;
-  height: 350px;
-  justify-content: center;
-  display: flex;
-  align-items: center;
-  margin-left: 30px;
-`;
+// const Img = styled.img`
+//   width: 500px;
+//   height: 350px;
+//   justify-content: center;
+//   display: flex;
+//   align-items: center;
+//   margin-left: 30px;
+// `;
 
 const Question = styled.div`
   display: flex;
-  justify-content: left;
-  margin: 30px;
+  justify-content: center;
+  align-items: center;
+  margin: 60px;
 `;
 
 const Comment = styled.div`

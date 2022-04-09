@@ -56,6 +56,7 @@ const Logo = styled.div`
   justify-content: left;
   margin: 25px;
   cursor: pointer;
+  color: #5f5f5f;
 `;
 
 const Wrapper = styled.div`
@@ -68,10 +69,12 @@ const Wrapper = styled.div`
 const LogBtn = styled.div`
   margin-right: 15px;
   cursor: pointer;
+  color: #5f5f5f;
 `;
 
 const Btn = styled.div`
   cursor: pointer;
+  color: #5f5f5f;
 `;
 
 const Div = styled.div`
