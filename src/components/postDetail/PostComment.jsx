@@ -1,47 +1,29 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 
 const PostComment = (props) => {
+  const comment = useSelector((state) => state.comment.comments);
+  console.log(comment);
   return (
     <>
       <Wrap>
-        <Input type="text" placeholder="댓글을 남겨주세요 ~!" />
+        <Input
+          type="text"
+          placeholder="댓글을 남겨주세요 ~!"
+          onChange={(e) => {
+            console.log(e.target.value);
+          }}
+        />
         <Button>작성!</Button>
       </Wrap>
       <TotalBox>
         <Box>
           <Profile />
           <CommentText>
-            <h3>duswo</h3>
-            <div>개발세발 댓글 테스트입니다 :)</div>
-            <CreateAt>2022-04-05 10:00:00</CreateAt>
-          </CommentText>
-        </Box>
-
-        <Box>
-          <Profile />
-          <CommentText>
-            <h3>duswo</h3>
-            <div>개발세발 댓글 테스트입니다 :)</div>
-            <CreateAt>2022-04-05 10:00:00</CreateAt>
-          </CommentText>
-        </Box>
-
-        <Box>
-          <Profile />
-          <CommentText>
-            <h3>duswo</h3>
-            <div>개발세발 댓글 테스트입니다 :)</div>
-            <CreateAt>2022-04-05 10:00:00</CreateAt>
-          </CommentText>
-        </Box>
-
-        <Box>
-          <Profile />
-          <CommentText>
-            <h3>duswo</h3>
-            <div>개발세발 댓글 테스트입니다 :)</div>
-            <CreateAt>2022-04-05 10:00:00</CreateAt>
+            <h3>{comment.nickname}</h3>
+            <div>{comment.comment}</div>
+            <CreateAt>{comment.createAt}</CreateAt>
           </CommentText>
         </Box>
       </TotalBox>
