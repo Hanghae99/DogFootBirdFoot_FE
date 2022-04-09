@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import PostPreview from "../components/Main/postPreview";
 
-const Mainpage = (props) => {
+const MainPage = (props) => {
   return (
     <>
       <Tap>
@@ -46,4 +46,4 @@ const Wrap = styled.div`
     rgba(0, 0, 0, 0.05) 0px 1px 1px 0px;
 `;
 
-export default Mainpage;
+export default MainPage;
