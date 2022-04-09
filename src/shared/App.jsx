@@ -2,18 +2,17 @@ import PostDetailPage from "../pages/PostDetailPage";
 import Header from "./header/Header";
 
 import { Route } from "react-router-dom"; // 경로설정및 이동을위해 꼭 필요함
+import { ConnectedRouter } from "connected-react-router";
 import Mypage from "../pages/MyPage";
 import Mainpage from "../pages/MainPage";
-
-import { Route } from "react-router-dom";
-import Mypage from "../pages/Mypage";
-import Mainpage from "../pages/Mainpage";
-
+import LoginPage from "../pages/LoginPage";
+import PostWritePage from "../pages/PostWritePage";
+import SignupPage from "../pages/SignupPage";
+import { history } from "../redux/store";
 
 function App() {
   return (
     <>
-
       <ConnectedRouter history={history}>
         <Header />
         <Route path="/" exact component={Mainpage} />
