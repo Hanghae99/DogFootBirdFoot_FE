@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { Input, Button } from "../elements";
 
-const Login = (props) => {
+const LoginPage = (props) => {
   return (
     <LoginWrap>
       <Text size="30px" bold margin="0px 0px 30px 0px">
@@ -37,4 +37,4 @@ const Text = styled.p`
   font-size: 30px;
 `;
 
-export default Login;
+export default LoginPage;

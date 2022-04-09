@@ -3,7 +3,7 @@ import styled from "styled-components";
 import PostPreview from "../components/Main/postPreview";
 import { Image, Button, Input, Text } from "../elements/index";
 
-const Mypage = (props) => {
+const MyPage = (props) => {
   return (
     <>
       <Grid>
@@ -61,4 +61,4 @@ const Wrap = styled.div`
     rgba(0, 0, 0, 0.05) 0px 1px 1px 0px;
 `;
 
-export default Mypage;
+export default MyPage;

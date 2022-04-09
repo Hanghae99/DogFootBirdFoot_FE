@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Input, Button } from "../elements";
 
-const SignupPage = (props) => {
+const SignUpPage = (props) => {
   return (
     <SignupWrap>
       <Text size="30px" bold margin="0px 0px 30px 0px">
@@ -44,4 +44,4 @@ const Text = styled.p`
   font-size: 30px;
 `;
 
-export default SignupPage;
+export default SignUpPage;
