@@ -5,7 +5,7 @@ import { Input, Button } from "../elements";
 const Login = (props) => {
   return (
     <LoginWrap>
-      <Text bold margin="0px 0px 30px 0px">
+      <Text size="30px" bold margin="0px 0px 30px 0px">
         로그인
       </Text>
       <Input placeholder="아이디를 입력해주세요" />
@@ -15,7 +15,7 @@ const Login = (props) => {
         margin="10px 0px"
       />
       <Button margin="17px 0px 0px 0px">로그인</Button>
-      <Button margin="10px" bg="#ffffff" color="#5f0080">
+      <Button margin="10px" bg="#ffffff" color="#111111">
         회원가입
       </Button>
     </LoginWrap>
