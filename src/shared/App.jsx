@@ -1,10 +1,10 @@
 import PostDetailPage from "../pages/PostDetailPage";
 import Header from "./header/Header";
 import { Route } from "react-router-dom";
-import Mypage from "../pages/MyPage";
-import Mainpage from "../pages/MainPage";
+import Mypage from "../pages/Mypage";
+import Mainpage from "../pages/Mainpage";
 import LoginPage from "../pages/LoginPage";
-import Signuppage from "../pages/SignupPage";
+import SignupPage from "../pages/SignupPage";
 import PostWritePage from "../pages/PostWritePage";
 
 function App() {
@@ -16,7 +16,7 @@ function App() {
       <Route path="/login" exact component={LoginPage} />
       <Route path="/postdetail" exact component={PostDetailPage} />
       <Route path="/postwrite" exact component={PostWritePage} />
-      <Route path="/signup" exact component={Signuppage} />
+      <Route path="/signup" exact component={SignupPage} />
     </>
   );
 }

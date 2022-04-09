@@ -1,8 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 
+import { Text } from "./index";
+
 const Input = (props) => {
-  const { placeholder, type, width, margin, padding } = props;
+  const { label, placeholder, type, width, margin, padding } = props;
 
   const styles = {
     width: width,
@@ -12,12 +14,14 @@ const Input = (props) => {
 
   return (
     <React.Fragment>
+      {label && <Text margin="0px">{label}</Text>}
       <ElInput {...styles} type={type} placeholder={placeholder}></ElInput>
     </React.Fragment>
   );
 };
 
 Input.defaultProps = {
+  label: false,
   placeholder: "텍스트를 입력하시오.",
   type: "text",
   value: "",
@@ -36,7 +40,6 @@ const ElInput = styled.input`
   ${(props) => (props.margin ? `margin:${props.margin};` : "")}
   &::placeholder {
     color: #cacaca;
-    font-weight: 500;
   }
   &:focus {
     border: 1px solid #333333;
