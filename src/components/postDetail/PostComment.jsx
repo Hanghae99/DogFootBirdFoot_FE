@@ -1,38 +1,95 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useRef, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useParams } from "react-router";
 import styled from "styled-components";
+import {
+  addComment,
+  deleteComment,
+  editComment,
+} from "../../redux/modules/comment";
+import moment from "moment";
+import axios from "axios";
+import { useEffect } from "react";
 
 const PostComment = (props) => {
+  const [commentValue, setCommentValue] = useState("");
+  const dispatch = useDispatch();
+  const params = useParams();
   const comment = useSelector((state) => state.comment.comments);
-  console.log(comment);
+
+  const id = useRef(3);
+
+  const onChange = (e) => {
+    const { value } = e.target;
+    setCommentValue(value);
+  };
+  const onAddComment = (e) => {
+    e.preventDefault();
+
+    const data = {
+      id: id.current++,
+      postsId: params.postsId,
+      userId: "ssi02014",
+      nickname: "연재몬",
+      comment: commentValue,
+      userProfile: "2021-12-09T10:28:46.000Z",
+      createdAt: moment().format("YYYY-MM-DD hh:mm:ss"),
+    };
+
+    dispatch(addComment(data));
+
+    /**
+     * data = { postsId, userId, comment }
+     */
+
+    // axios
+    //   .post(`/post/${params.postId}`, data)
+    //   .then((res) => {
+    //     dispatch(addComment(res.data.comment));
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
+  };
+
+  const onDeleteComment = (e) => {
+    dispatch(deleteComment(comment));
+  };
+
+  const onEditComment = (e) => {
+    dispatch(editComment(comment));
+  };
+
   return (
     <>
-      <Wrap>
+      <FormContainer onSubmit={onAddComment}>
         <Input
           type="text"
           placeholder="댓글을 남겨주세요 ~!"
-          onChange={(e) => {
-            console.log(e.target.value);
-          }}
+          onChange={onChange}
         />
         <Button>작성!</Button>
-      </Wrap>
+      </FormContainer>
       <TotalBox>
-        <Box>
-          <Profile />
-          <CommentText>
-            <h3>{comment.nickname}</h3>
-            <div>{comment.comment}</div>
-            <CreateAt>{comment.createAt}</CreateAt>
-          </CommentText>
-        </Box>
+        {comment.map((item) => (
+          <Box key={item.id}>
+            <Profile />
+            <CommentText>
+              <h3>{item.nickname}</h3>
+              <div>{item.comment}</div>
+              <button onClick={onDeleteComment}>삭제</button>
+              <button onClick={onEditComment}>수정</button>
+              <CreateAt>{item.createdAt}</CreateAt>
+            </CommentText>
+          </Box>
+        ))}
       </TotalBox>
     </>
   );
 };
 export default PostComment;
 
-const Wrap = styled.div`
+const FormContainer = styled.form`
   display: flex;
   justify-content: center;
   align-items: center;
