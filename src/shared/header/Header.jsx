@@ -6,28 +6,40 @@ const Header = (props) => {
   const history = useHistory();
   //Header분기
 
+  const onClick = (e) => {
+    const { name } = e.target;
+    switch (name) {
+      case "login":
+        history.push("/login");
+        break;
+      case "signup":
+        history.push("/signup");
+        break;
+      default:
+        return;
+    }
+  };
   //로그인 하기 전
   return (
     <>
       <Wrapper>
-        <Logo>개발세발🐶</Logo>
+        <Logo
+          name="logo"
+          onClick={() => {
+            history.push("/");
+          }}
+        >
+          개발세발🐶
+        </Logo>
 
         <Div>
-          <LogBtn>어서오세요, Dev.yeonnJ님!</LogBtn>
-          <LogBtn
-            onClick={() => {
-              history.push("/login");
-            }}
-          >
+          <p>어서오세요, Dev.yeonnJ님!</p>
+          <HeaderButton name="login" onClick={onClick}>
             로그인
-          </LogBtn>
-          <Btn
-            onClick={() => {
-              history.push("/signup");
-            }}
-          >
+          </HeaderButton>
+          <HeaderButton name="signup" onClick={onClick}>
             회원가입
-          </Btn>
+          </HeaderButton>
         </Div>
       </Wrapper>
     </>
@@ -41,8 +53,8 @@ const Header = (props) => {
 //         <Logo>개발세발🐶</Logo>
 
 //         <Div>
-//           <LogBtn>로그아웃</LogBtn>
-//           <Btn>마이페이지</Btn>
+//           <HeaderButton>로그아웃</HeaderButton>
+//           <HeaderButton>마이페이지</HeaderButton>
 //         </Div>
 //       </Wrapper>
 //     </>
@@ -66,19 +78,34 @@ const Wrapper = styled.div`
   margin: 0 350px;
 `;
 
-const LogBtn = styled.div`
-  margin-right: 15px;
+const HeaderButton = styled.button`
   cursor: pointer;
   color: #5f5f5f;
+  background-color: transparent;
+  border: none;
+
+  & + & {
+    margin-left: 15px;
+  }
+
+  &:hover {
+    color: tomato;
+  }
 `;
 
-const Btn = styled.div`
-  cursor: pointer;
-  color: #5f5f5f;
-`;
+// const Btn = styled.div`
+//   cursor: pointer;
+//   color: #5f5f5f;
+// `;
 
 const Div = styled.div`
   display: flex;
   justify-content: right;
   margin: 25px;
+
+  p {
+    margin: 0;
+    padding: 0;
+    margin-right: 15px;
+  }
 `;

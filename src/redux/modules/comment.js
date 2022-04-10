@@ -1,6 +1,5 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
-import { actionCreators as postActions } from "./post";
 import moment from "moment";
 
 // Actions Types
@@ -10,32 +9,46 @@ const EDIT_COMMENT = "EDIT_COMMENT";
 const DELETE_COMMENT = "DELETE_COMMENT";
 
 // Action Creators
-const getComment = createAction(GET_COMMENT, (postId, comments) => ({
+export const getComment = createAction(GET_COMMENT, (postId, comments) => ({
   postId,
   comments,
 }));
-const addComment = createAction(ADD_COMMENT, (postId, comment) => ({
-  postId,
+export const addComment = createAction(ADD_COMMENT, (comment) => ({
   comment,
 }));
-const editComment = createAction(
+export const editComment = createAction(
   EDIT_COMMENT,
   (postId, commentId, newComment) => ({ postId, commentId, newComment })
 );
-const deleteComment = createAction(DELETE_COMMENT, (postId, commentId) => ({
-  postId,
-  commentId,
-}));
+export const deleteComment = createAction(
+  DELETE_COMMENT,
+  (postId, commentId) => ({
+    postId,
+    commentId,
+  })
+);
 
 const initialComment = {
-  comments: {
-    id: 1,
-    nickname: "연재몬",
-    comment: "안녕하세요, 댓글 테스트입니다.",
-    userProfile: "2021-12-09T10:28:46.000Z",
-    createdAt: "2021-12-09T10:28:46.000Z",
-    userId: 2,
-  },
+  comments: [
+    {
+      id: 1,
+      postsId: 1,
+      userId: 2,
+      nickname: "연재몬",
+      comment: "안녕하세요, 댓글 테스트입니다.",
+      userProfile: "2021-12-09T10:28:46.000Z",
+      createdAt: moment().format("YYYY-MM-DD hh:mm:ss"),
+    },
+    {
+      id: 2,
+      postsId: 1,
+      userId: 2,
+      nickname: "연재몬",
+      comment: "안녕하세요, 댓글 테스트입니다.",
+      userProfile: "2021-12-09T10:28:46.000Z",
+      createdAt: moment().format("YYYY-MM-DD hh:mm:ss"),
+    },
+  ],
 };
 
 // Reducer
@@ -47,10 +60,16 @@ export default handleActions(
       }),
     [ADD_COMMENT]: (state, action) =>
       produce(state, (draft) => {
-        draft.list[action.payload.postId].unshift(action.payload.comment);
+        draft.comments.unshift(action.payload.comment);
       }),
-    [EDIT_COMMENT]: (state, action) => produce(state, (draft) => {}),
-    [DELETE_COMMENT]: (state, action) => produce(state, (draft) => {}),
+    [EDIT_COMMENT]: (state, action) =>
+      produce(state, (draft) => {
+        console.log("수정할거야");
+      }),
+    [DELETE_COMMENT]: (state, action) =>
+      produce(state, (draft) => {
+        draft.comments.shift(action.payload.comment);
+      }),
   },
   initialComment
 );
