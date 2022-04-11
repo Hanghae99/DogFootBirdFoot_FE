@@ -9,6 +9,7 @@ import moment from "moment";
 const PostWrite = (props) => {
   const [postTitleValue, setPostTitleValue] = React.useState("");
   const [postContentValue, setPostContentValue] = React.useState("");
+  const [selete, setSelete] = React.useState("");
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -20,6 +21,11 @@ const PostWrite = (props) => {
   const onContentChange = (e) => {
     const { value } = e.target; //구조분해할당
     setPostContentValue(value);
+  };
+
+  const onClick = (e) => {
+    const { value } = e.target; //구조분해할당
+    setSelete(value);
   };
 
   const onAddPost = (e) => {
@@ -38,7 +44,7 @@ const PostWrite = (props) => {
     dispatch(addPost(data));
     history.push("/");
   };
-
+  console.log(selete);
   return (
     <>
       <Total>
@@ -47,13 +53,23 @@ const PostWrite = (props) => {
             <button className="dropbtn">언어 선택</button>
 
             <div className="dropdown-content">
-              <a href="#">JAVA</a>
-              <a href="#">JS</a>
-              <a href="#">PYTHON</a>
-              <a href="#">NODE.JS</a>
-              <a href="#">SPRING</a>
+              <button onClick={onClick} value="JAVA">
+                JAVA
+              </button>
+              <button onClick={onClick} value="JS">
+                JS
+              </button>
+              <button onClick={onClick} value="PYTHON">
+                PYTHON
+              </button>
+              <button onClick={onClick} value="NODE.JS">
+                NODE.JS
+              </button>
+              <button onClick={onClick} value="SPRING">
+                SPRING
+              </button>
             </div>
-            <h1 className="language">JAVA</h1>
+            <h1 className="language">{selete}</h1>
           </div>
 
           <form onSubmit={onAddPost}>
@@ -70,7 +86,7 @@ const PostWrite = (props) => {
               placeholder="내용을 입력해주세요"
               onChange={onContentChange}
             />
-            {/* <InputFile type="file" /> */}
+            <InputFile type="file" />
 
             <Button>게시하기</Button>
           </form>
@@ -110,14 +126,14 @@ const Input = styled.input`
   box-shadow: 2px 2px 3px 2px rgba(0, 0, 0, 0.1);
 `;
 
-// const InputFile = styled.input`
-//   display: block;
-//   justify-content: center;
-//   align-items: center;
-//   border-style: none;
-//   width: 1030px;
-//   padding: 20px;
-// `;
+const InputFile = styled.input`
+  display: block;
+  justify-content: center;
+  align-items: center;
+  border-style: none;
+  width: 1030px;
+  padding: 20px;
+`;
 
 const InputContents = styled.textarea`
   display: block;
