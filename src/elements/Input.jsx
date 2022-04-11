@@ -4,8 +4,10 @@ import styled from "styled-components";
 import { Text } from "./index";
 
 const Input = (props) => {
-  const { label, placeholder, type, width, margin, padding } = props;
+  const { label, placeholder, type, width, margin, padding, _onChange } = props;
 
+  // 작성 문법이 잘 이해가 안간다.
+  // 왜 props.width 라고 적지 않는거지? 이건 공부해서 블로그에 적어두자
   const styles = {
     width: width,
     margin: margin,
@@ -14,8 +16,13 @@ const Input = (props) => {
 
   return (
     <React.Fragment>
-      {label && <Text margin="0px">{label}</Text>}
-      <ElInput {...styles} type={type} placeholder={placeholder}></ElInput>
+      {label && <Text margin="5px">{label}</Text>}
+      <ElInput
+        {...styles}
+        type={type}
+        placeholder={placeholder}
+        onChange={_onChange}
+      ></ElInput>
     </React.Fragment>
   );
 };
@@ -28,6 +35,7 @@ Input.defaultProps = {
   width: "90%",
   margin: false,
   padding: false,
+  _onChange: () => {},
 };
 
 const ElInput = styled.input`
