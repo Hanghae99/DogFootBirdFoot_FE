@@ -41,7 +41,7 @@ const signupAPI = (id, nickname, pw, email) => {
         history.push("/login");
       })
       .catch((err) => {
-        console.log(err.response);
+        console.log(err);
       });
   };
 };
