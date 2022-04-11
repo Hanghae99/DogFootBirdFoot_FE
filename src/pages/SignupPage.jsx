@@ -35,6 +35,11 @@ const SignUpPage = (props) => {
       return;
     }
 
+    if (pw !== pwCheck) {
+      alert("비밀번호를 다시 확인해주세요.");
+      return;
+    }
+
     if (nickName === "") {
       alert("닉네임을(를) 입력해주세요.");
       return;
@@ -60,7 +65,12 @@ const SignUpPage = (props) => {
           changeId(e);
         }}
       />
-      <Button margin="10px" bg="#ffffff" color="#111111">
+      <Button
+        margin="10px"
+        bg="#ffffff"
+        color="#111111"
+        _onClick={() => dispatch(userActions.idcheckAPI(id, pw))}
+      >
         아이디 중복 체크
       </Button>
       <Input
