@@ -15,10 +15,7 @@ const MainPage = (props) => {
       </Tap>
 
       <Wrap>
-        <PostPreview></PostPreview>
-        <PostPreview></PostPreview>
-        <PostPreview></PostPreview>
-        <PostPreview></PostPreview>
+        <PostPreview />
       </Wrap>
     </>
   );
@@ -29,13 +26,6 @@ const Tap = styled.ul`
   flex-direction: column;
   box-shadow: rgba(50, 50, 105, 0.15) 0px 2px 5px 0px,
     rgba(0, 0, 0, 0.05) 0px 1px 1px 0px;
-`;
-
-const Li = styled.li`
-  display: inline-block;
-  height: 46px;
-  text-align: center;
-  border-right: 1px solid #ddd;
 `;
 
 const Wrap = styled.div`
