@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const Button = (props) => {
-  const { width, margin, padding, color, bg, children } = props;
+  const { width, margin, padding, color, bg, children, _onClick } = props;
 
   const styles = {
     width: width,
@@ -14,7 +14,9 @@ const Button = (props) => {
 
   return (
     <React.Fragment>
-      <BasicButton {...styles}>{children}</BasicButton>
+      <BasicButton {...styles} onClick={_onClick}>
+        {children}
+      </BasicButton>
     </React.Fragment>
   );
 };

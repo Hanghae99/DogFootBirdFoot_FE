@@ -2,19 +2,52 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { Input, Button } from "../elements";
 
+import { useDispatch } from "react-redux";
+import { actionCreators as userActions } from "../redux/modules/user";
+
 const LoginPage = (props) => {
+  const dispatch = useDispatch();
+
+  const [id, setId] = React.useState("");
+  const [pw, setPw] = React.useState("");
+
+  const login = () => {
+    if (id === "" || pw === "") {
+      window.alert("아이디 혹은 비밀번호가 공란입니다! 입력해주세요!");
+      return;
+    }
+
+    dispatch(userActions.loginAPI(id, pw));
+  };
+
   return (
     <LoginWrap>
       <Text size="30px" bold margin="0px 0px 30px 0px">
         로그인
       </Text>
-      <Input placeholder="아이디를 입력해주세요" />
+      <Input
+        placeholder="아이디를 입력해주세요"
+        _onChange={(e) => {
+          setId(e.target.value);
+        }}
+      />
       <Input
         placeholder="비밀번호를 입력해주세요"
         type="password"
         margin="10px 0px"
+        _onChange={(e) => {
+          setPw(e.target.value);
+        }}
       />
-      <Button margin="17px 0px 0px 0px">로그인</Button>
+      <Button
+        margin="17px 0px 0px 0px"
+        _onClick={() => {
+          console.log("로그인 했어!");
+          login();
+        }}
+      >
+        로그인
+      </Button>
       <Button margin="10px" bg="#ffffff" color="#111111">
         회원가입
       </Button>

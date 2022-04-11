@@ -1,6 +1,7 @@
 // 1. import
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
+import { api } from "../../shared/api";
 
 // 2. actions(액션 타입)
 const LOG_OUT = "LOG_OUT";
@@ -35,6 +36,7 @@ const signupAPI = (id, nickname, pw, email) => {
         email: email,
       })
       .then((res) => {
+        console.log(res);
         window.alert("회원가입이 완료되었습니다. 로그인해주세요!");
         history.push("/login");
       })
