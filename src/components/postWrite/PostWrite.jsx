@@ -1,8 +1,44 @@
 import React from "react";
+import { useHistory } from "react-router";
 import styled from "styled-components";
 import "./PostWrite.css";
+import { addPost } from "../../redux/modules/post";
+import { useDispatch } from "react-redux";
+import moment from "moment";
 
 const PostWrite = (props) => {
+  const [postTitleValue, setPostTitleValue] = React.useState("");
+  const [postContentValue, setPostContentValue] = React.useState("");
+  const history = useHistory();
+  const dispatch = useDispatch();
+
+  const onTitleChange = (e) => {
+    const { value } = e.target; //구조분해할당
+    setPostTitleValue(value);
+  };
+
+  const onContentChange = (e) => {
+    const { value } = e.target; //구조분해할당
+    setPostContentValue(value);
+  };
+
+  const onAddPost = (e) => {
+    e.preventDefault();
+
+    const data = {
+      postId: 1,
+      category: "JAVA",
+      postTitle: postTitleValue,
+      postContents: postContentValue,
+      nickname: "YeonnJ",
+      commentCount: 50,
+      likeCount: 500,
+      createdAt: moment().format("YYYY-MM-DD hh:mm:ss"),
+    };
+    dispatch(addPost(data));
+    history.push("/");
+  };
+
   return (
     <>
       <Total>
@@ -20,17 +56,24 @@ const PostWrite = (props) => {
             <h1 className="language">JAVA</h1>
           </div>
 
-          <Input type="text" placeholder="제목을 입력해주세요" />
-          <InputContents
-            textarea
-            cols="30"
-            rows="30"
-            type="text"
-            placeholder="내용을 입력해주세요"
-          />
-          <InputFile type="file" />
+          <form onSubmit={onAddPost}>
+            <Input
+              type="text"
+              placeholder="제목을 입력해주세요"
+              onChange={onTitleChange}
+            />
+            <InputContents
+              textarea
+              cols="30"
+              rows="30"
+              type="text"
+              placeholder="내용을 입력해주세요"
+              onChange={onContentChange}
+            />
+            {/* <InputFile type="file" /> */}
 
-          <Button>게시하기</Button>
+            <Button>게시하기</Button>
+          </form>
         </InputLay>
       </Total>
     </>
@@ -53,6 +96,7 @@ const Button = styled.button`
   width: 100px;
   padding: 20px;
   margin-left: 500px;
+  margin-top: 20px;
 `;
 
 const Input = styled.input`
@@ -66,14 +110,14 @@ const Input = styled.input`
   box-shadow: 2px 2px 3px 2px rgba(0, 0, 0, 0.1);
 `;
 
-const InputFile = styled.input`
-  display: block;
-  justify-content: center;
-  align-items: center;
-  border-style: none;
-  width: 1030px;
-  padding: 20px;
-`;
+// const InputFile = styled.input`
+//   display: block;
+//   justify-content: center;
+//   align-items: center;
+//   border-style: none;
+//   width: 1030px;
+//   padding: 20px;
+// `;
 
 const InputContents = styled.textarea`
   display: block;

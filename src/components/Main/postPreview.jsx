@@ -1,27 +1,32 @@
 import React from "react";
 import styled from "styled-components";
+import { useSelector } from "react-redux";
 
 const PostPreview = (props) => {
+  const post = useSelector((state) => state.post.posts);
+  console.log(post);
+
   return (
     <>
-      <Box>
-        <LanBox>
-          <h2>PYTHON</h2>
-        </LanBox>
-        <div>
-          <Question>
-            Python을 사용하면 구조화 된 스타일로 프로그래밍 할 수 있나요?
-          </Question>
-          <Comment>
-            <div>
-              <i className="fa-solid fa-comment-dots"></i> 12개
-            </div>
-            <LikeComment>
-              <i className="fa-solid fa-heart"></i> 120개
-            </LikeComment>
-          </Comment>
-        </div>
-      </Box>
+      {post.map((item) => (
+        <Box key={item.id}>
+          <LanBox>
+            <h2>{item.category}</h2>
+          </LanBox>
+          <div>
+            <Question>{item.postTitle}</Question>
+            <Comment>
+              <div>
+                <i className="fa-solid fa-comment-dots"></i> {item.commentCount}
+                개
+              </div>
+              <LikeComment>
+                <i className="fa-solid fa-heart"></i> {item.likeCount}개
+              </LikeComment>
+            </Comment>
+          </div>
+        </Box>
+      ))}
     </>
   );
 };
