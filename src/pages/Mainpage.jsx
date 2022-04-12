@@ -6,12 +6,16 @@ const MainPage = (props) => {
   return (
     <>
       <Tap>
-        <h1>메인페이지입니당</h1>
-        <button>카테고리1</button>
-        <button>카테고리2</button>
-        <button>카테고리3</button>
-        <button>카테고리4</button>
-        <button>카테고리5</button>
+        <button>JAVA</button>
+        <button>JS</button>
+        <button>SPRING</button>
+        <button>NODE.JS</button>
+        <button>PYTHON</button>
+
+        <div>
+          <input type="text" />
+          <button>검색</button>
+        </div>
       </Tap>
 
       <Wrap>

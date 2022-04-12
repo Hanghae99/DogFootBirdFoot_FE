@@ -13,18 +13,28 @@ const PostWrite = (props) => {
   const history = useHistory();
   const dispatch = useDispatch();
 
+  const fileInput = React.useRef();
+
+  const seleteFile = (e) => {
+    console.log(e);
+    console.log(e.target);
+    console.log(e.target.files[0]);
+
+    console.log(fileInput.current.files[0]);
+  };
+
   const onTitleChange = (e) => {
-    const { value } = e.target; //구조분해할당
+    const { value } = e.target;
     setPostTitleValue(value);
   };
 
   const onContentChange = (e) => {
-    const { value } = e.target; //구조분해할당
+    const { value } = e.target;
     setPostContentValue(value);
   };
 
   const onClick = (e) => {
-    const { value } = e.target; //구조분해할당
+    const { value } = e.target;
     setSelete(value);
   };
 
@@ -44,7 +54,30 @@ const PostWrite = (props) => {
     dispatch(addPost(data));
     history.push("/");
   };
-  console.log(selete);
+
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   const formData = new FormData();
+  //   formData.append("photo", files.length && files[0].uploadedFile);
+  //   formData.append("comment", commentValue);
+  //   formData.append("content_id", classData.content_id);
+
+  //   axios({
+  //     method: "post",
+  //     url: process.env.REACT_APP_STREAMING_COMMENT_URL, //환경변수
+  //     data: formData,
+  //     headers: { "Content-Type": "multipart/form-data", Authorization: localStorage.getItem("access_token") }
+  //   });
+  //   setCommentValue("");
+  //   setFiles([]);
+  // };
+
+  // const handleUpload = (e) => {
+  //   e.preventDefault();
+  //   const file = e.target.files[0];
+  //   setFiles([...files, { uploadedFile: file }]);
+  // };
+
   return (
     <>
       <Total>
@@ -72,7 +105,13 @@ const PostWrite = (props) => {
             <h1 className="language">{selete}</h1>
           </div>
 
-          <form onSubmit={onAddPost}>
+          <form
+            name="contentform"
+            // action="/home/uploadfiles"
+            onSubmit={onAddPost}
+            enctype="multipart/form-data"
+            method="post"
+          >
             <Input
               type="text"
               placeholder="제목을 입력해주세요"
@@ -86,7 +125,7 @@ const PostWrite = (props) => {
               placeholder="내용을 입력해주세요"
               onChange={onContentChange}
             />
-            <InputFile type="file" />
+            <InputFile type="file" ref={fileInput} onChange={seleteFile} />
 
             <Button>게시하기</Button>
           </form>

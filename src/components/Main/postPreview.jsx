@@ -35,10 +35,11 @@ export default PostPreview;
 
 const Box = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: left;
+  align-items: center;
   box-shadow: 1px 4px 4px 4px rgba(0, 0, 0, 0.15);
   margin: 30px 20px;
-  padding: 0px;
+  padding: 10px;
 `;
 
 const LanBox = styled.div`

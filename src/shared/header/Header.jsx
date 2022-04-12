@@ -35,10 +35,10 @@ const Header = (props) => {
         <Div>
           <p>어서오세요, Dev.yeonnJ님!</p>
           <HeaderButton name="login" onClick={onClick}>
-            로그인
+            Login
           </HeaderButton>
           <HeaderButton name="signup" onClick={onClick}>
-            회원가입
+            SignUp
           </HeaderButton>
         </Div>
       </Wrapper>
@@ -53,8 +53,8 @@ const Header = (props) => {
 //         <Logo>개발세발🐶</Logo>
 
 //         <Div>
-//           <HeaderButton>로그아웃</HeaderButton>
-//           <HeaderButton>마이페이지</HeaderButton>
+//           <HeaderButton>Logout</HeaderButton>
+//           <HeaderButton>Mypage</HeaderButton>
 //         </Div>
 //       </Wrapper>
 //     </>
