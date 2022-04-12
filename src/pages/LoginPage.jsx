@@ -4,9 +4,11 @@ import { Input, Button } from "../elements";
 
 import { useDispatch } from "react-redux";
 import { actionCreators as userActions } from "../redux/modules/user";
+import { useHistory } from "react-router";
 
 const LoginPage = (props) => {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const [id, setId] = React.useState("");
   const [pw, setPw] = React.useState("");
@@ -48,7 +50,14 @@ const LoginPage = (props) => {
       >
         로그인
       </Button>
-      <Button margin="10px" bg="#ffffff" color="#111111">
+      <Button
+        margin="10px"
+        bg="#ffffff"
+        color="#111111"
+        _onClick={(e) => {
+          history.push("/signup");
+        }}
+      >
         회원가입
       </Button>
     </LoginWrap>

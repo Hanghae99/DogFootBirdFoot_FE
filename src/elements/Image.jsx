@@ -2,11 +2,15 @@ import React from "react";
 import styled from "styled-components";
 
 const Image = (props) => {
-  const { shape, src, size, half } = props;
+  const { shape, src, width, height, margin, padding, size, half } = props;
 
   const styles = {
     src: src,
-    size: size,
+    width,
+    height,
+    margin,
+    padding,
+    size,
     half: half,
   };
 
@@ -14,21 +18,21 @@ const Image = (props) => {
 };
 
 Image.defaultProps = {
+  width: "100%",
+  height: "100%",
   shape: "circle",
   src: "https://www.newsworks.co.kr/news/photo/202002/433057_327801_345.jpg",
-  size: 200,
+  size: "80%",
   half: false,
 };
 
 const ImageCircle = styled.div`
-  --size: ${(props) => props.size}px;
-  width: var(--size);
-  height: var(--size);
-  border-radius: var(--size);
-
+  width: ${(props) => props.width};
+  height: ${(props) => props.height};
+  border-radius: 50%;
   background-image: url("${(props) => props.src}");
   background-size: cover;
-  margin: 4px;
+  margin: 0px;
 `;
 
 export default Image;
