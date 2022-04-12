@@ -43,7 +43,7 @@ const MyPage = (props) => {
         </Profile>
         <Userinfo>
           <Input label="성명" width="60%" margin="10px"></Input>
-          <Input label="아이디" width="100%" margin="10px"></Input>
+          <Input label="아이디" width="60%" margin="10px"></Input>
           <Input label="이메일" width="60%" margin="10px"></Input>
         </Userinfo>
       </Myinfo>
@@ -101,8 +101,8 @@ const Profile = styled.div`
 
 const ImageBox = styled.div`
 display: inline-block;
-width: 80%;
-height: 80%;
+width: 200px;
+height: 200px;
 border-radius: 70%
 overflow: hidden;
 margin: 10px;
