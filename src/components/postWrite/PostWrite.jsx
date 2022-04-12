@@ -5,27 +5,38 @@ import "./PostWrite.css";
 import { addPost } from "../../redux/modules/post";
 import { useDispatch } from "react-redux";
 import moment from "moment";
+import { ImageUploadDB } from "../../redux/modules/image";
 
 const PostWrite = (props) => {
   const [postTitleValue, setPostTitleValue] = React.useState("");
   const [postContentValue, setPostContentValue] = React.useState("");
-  const [selete, setSelete] = React.useState("");
+  const [select, setSelect] = React.useState("");
+
   const history = useHistory();
   const dispatch = useDispatch();
 
+  const fileInput = React.useRef();
+
+  const selectFile = (e) => {
+    const formData = new FormData();
+    const fileImage = e.target.files[0];
+    formData.append("images", fileImage);
+    dispatch(ImageUploadDB(formData));
+  };
+
   const onTitleChange = (e) => {
-    const { value } = e.target; //구조분해할당
+    const { value } = e.target;
     setPostTitleValue(value);
   };
 
   const onContentChange = (e) => {
-    const { value } = e.target; //구조분해할당
+    const { value } = e.target;
     setPostContentValue(value);
   };
 
   const onClick = (e) => {
-    const { value } = e.target; //구조분해할당
-    setSelete(value);
+    const { value } = e.target;
+    setSelect(value);
   };
 
   const onAddPost = (e) => {
@@ -44,7 +55,7 @@ const PostWrite = (props) => {
     dispatch(addPost(data));
     history.push("/");
   };
-  console.log(selete);
+
   return (
     <>
       <Total>
@@ -69,10 +80,16 @@ const PostWrite = (props) => {
                 SPRING
               </button>
             </div>
-            <h1 className="language">{selete}</h1>
+            <h1 className="language">{select}</h1>
           </div>
 
-          <form onSubmit={onAddPost}>
+          <form
+            name="contentform"
+            // action="/home/uploadfiles"
+            onSubmit={onAddPost}
+            encType="multipart/form-data"
+            method="post"
+          >
             <Input
               type="text"
               placeholder="제목을 입력해주세요"
@@ -86,7 +103,7 @@ const PostWrite = (props) => {
               placeholder="내용을 입력해주세요"
               onChange={onContentChange}
             />
-            <InputFile type="file" />
+            <InputFile type="file" ref={fileInput} onChange={selectFile} />
 
             <Button>게시하기</Button>
           </form>

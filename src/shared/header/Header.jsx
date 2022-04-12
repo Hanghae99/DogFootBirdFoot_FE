@@ -39,6 +39,7 @@ const Header = (props) => {
   }, [dispatch]);
 
   //로그인 하기 전
+
   if (is_login === false) {
     return (
       <>

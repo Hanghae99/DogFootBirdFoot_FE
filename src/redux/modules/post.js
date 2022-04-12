@@ -1,6 +1,7 @@
 import { createAction, handleActions } from "redux-actions";
 import produce from "immer";
 import moment from "moment";
+import { apis } from "../../shared/api";
 
 // 액션 타입 지정
 const SET_POST = "SET_POST";
@@ -29,6 +30,9 @@ const initialPost = {
 };
 
 //미들웨어
+export const addPostDB = (post) => {
+  return async function (dispatch, getState, { history }) {};
+};
 
 // 리듀서
 export default handleActions(
