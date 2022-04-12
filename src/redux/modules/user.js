@@ -21,26 +21,24 @@ const initialState = {
 };
 
 // 미들웨어 1. 회원가입
-const idcheckAPI = (id, pw) => {
+const idcheckAPI = (id) => {
   return function (dispatch, getState, { history }) {
     console.log("아이디", id);
-    console.log("비밀번호", pw);
 
     api
       .post("/user/dupliChk", {
         username: id,
-        password: pw,
       })
       .then((res) => {
         console.log(res);
-        if (res.result === true) {
-          window.alert("작성한 id로 가입할 수 있습니다!");
-        } else {
-          window.alert("작성한 id를 사용하는 회원이 이미 있습니다!");
-        }
+        // if (res.result === true) {
+        //   window.alert("작성한 id로 가입할 수 있습니다!");
+        // } else {
+        //   window.alert("작성한 id를 사용하는 회원이 이미 있습니다!");
+        // }
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err.response);
       });
   };
 };
@@ -71,13 +69,12 @@ const signupAPI = (id, nickname, pw, email) => {
 };
 
 // 로그인
-// 로그인 로직의 전반적인 프로세스는 아래의 블로그를 참고했다.
 
 const loginAPI = (id, pw) => {
   return function (dispatch, getState, { history }) {
     console.log(id, pw);
     api
-      .post("/users/login", {
+      .post("/user/login", {
         username: id,
         password: pw,
       })

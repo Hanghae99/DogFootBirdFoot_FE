@@ -2,7 +2,6 @@ import React from "react";
 import { useHistory } from "react-router";
 import styled from "styled-components";
 
-import { history } from "../../redux/store";
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as userActions } from "../../redux/modules/user";
 
@@ -108,15 +107,18 @@ const Logo = styled.div`
 const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
   background-color: blanchedalmond;
-  margin: 0 350px;
+  margin: 0 300px;
 `;
 
 const HeaderButton = styled.button`
   cursor: pointer;
-  color: #5f5f5f;
-  background-color: transparent;
-  border: none;
+  color: #fff;
+  background-color: #298d49;
+  border: 1px solid;
+  border-radius: 25px;
+  padding: 5px 10px;
 
   & + & {
     margin-left: 15px;
@@ -124,6 +126,7 @@ const HeaderButton = styled.button`
 
   &:hover {
     color: tomato;
+    font-weight: 600;
   }
 `;
 
@@ -135,6 +138,7 @@ const HeaderButton = styled.button`
 const Div = styled.div`
   display: flex;
   justify-content: right;
+  align-items: center;
   margin: 25px;
 
   p {
