@@ -50,6 +50,8 @@ const SignUpPage = (props) => {
       return;
     }
 
+    // 아이디 중복 체크 확인 조건문 추가 필요
+
     dispatch(userActions.signupAPI(id, nickName, pw, email));
   };
 

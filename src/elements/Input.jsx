@@ -4,12 +4,22 @@ import styled from "styled-components";
 import { Text } from "./index";
 
 const Input = (props) => {
-  const { label, placeholder, type, width, margin, padding, _onChange } = props;
+  const {
+    label,
+    placeholder,
+    type,
+    width,
+    height,
+    margin,
+    padding,
+    _onChange,
+  } = props;
 
   // 작성 문법이 잘 이해가 안간다.
   // 왜 props.width 라고 적지 않는거지? 이건 공부해서 블로그에 적어두자
   const styles = {
     width: width,
+    height: height,
     margin: margin,
     padding: padding,
   };
@@ -33,6 +43,7 @@ Input.defaultProps = {
   type: "text",
   value: "",
   width: "90%",
+
   margin: false,
   padding: false,
   _onChange: () => {},
@@ -44,10 +55,11 @@ const ElInput = styled.input`
   border-radius: 3px;
   outline: none;
   width: ${(props) => props.width};
+
   padding: ${(props) => (props.padding ? `${props.padding};` : "19px 19px;")};
   ${(props) => (props.margin ? `margin:${props.margin};` : "")}
   &::placeholder {
-    color: #cacaca;
+    color: #bbb;
   }
   &:focus {
     border: 1px solid #333333;

@@ -5,22 +5,23 @@ import "./PostWrite.css";
 import { addPost } from "../../redux/modules/post";
 import { useDispatch } from "react-redux";
 import moment from "moment";
+import { ImageUploadDB } from "../../redux/modules/image";
 
 const PostWrite = (props) => {
   const [postTitleValue, setPostTitleValue] = React.useState("");
   const [postContentValue, setPostContentValue] = React.useState("");
-  const [selete, setSelete] = React.useState("");
+  const [select, setSelect] = React.useState("");
+
   const history = useHistory();
   const dispatch = useDispatch();
 
   const fileInput = React.useRef();
 
-  const seleteFile = (e) => {
-    console.log(e);
-    console.log(e.target);
-    console.log(e.target.files[0]);
-
-    console.log(fileInput.current.files[0]);
+  const selectFile = (e) => {
+    const formData = new FormData();
+    const fileImage = e.target.files[0];
+    formData.append("images", fileImage);
+    dispatch(ImageUploadDB(formData));
   };
 
   const onTitleChange = (e) => {
@@ -35,7 +36,7 @@ const PostWrite = (props) => {
 
   const onClick = (e) => {
     const { value } = e.target;
-    setSelete(value);
+    setSelect(value);
   };
 
   const onAddPost = (e) => {
@@ -54,29 +55,6 @@ const PostWrite = (props) => {
     dispatch(addPost(data));
     history.push("/");
   };
-
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   const formData = new FormData();
-  //   formData.append("photo", files.length && files[0].uploadedFile);
-  //   formData.append("comment", commentValue);
-  //   formData.append("content_id", classData.content_id);
-
-  //   axios({
-  //     method: "post",
-  //     url: process.env.REACT_APP_STREAMING_COMMENT_URL, //환경변수
-  //     data: formData,
-  //     headers: { "Content-Type": "multipart/form-data", Authorization: localStorage.getItem("access_token") }
-  //   });
-  //   setCommentValue("");
-  //   setFiles([]);
-  // };
-
-  // const handleUpload = (e) => {
-  //   e.preventDefault();
-  //   const file = e.target.files[0];
-  //   setFiles([...files, { uploadedFile: file }]);
-  // };
 
   return (
     <>
@@ -102,14 +80,14 @@ const PostWrite = (props) => {
                 SPRING
               </button>
             </div>
-            <h1 className="language">{selete}</h1>
+            <h1 className="language">{select}</h1>
           </div>
 
           <form
             name="contentform"
             // action="/home/uploadfiles"
             onSubmit={onAddPost}
-            enctype="multipart/form-data"
+            encType="multipart/form-data"
             method="post"
           >
             <Input
@@ -125,7 +103,7 @@ const PostWrite = (props) => {
               placeholder="내용을 입력해주세요"
               onChange={onContentChange}
             />
-            <InputFile type="file" ref={fileInput} onChange={seleteFile} />
+            <InputFile type="file" ref={fileInput} onChange={selectFile} />
 
             <Button>게시하기</Button>
           </form>

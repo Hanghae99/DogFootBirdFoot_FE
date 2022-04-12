@@ -30,7 +30,7 @@ api.interceptors.request.use(async (config) => {
   config.headers["Content-Type"] = "application/json; charset=utf-8";
   config.headers["X-Requested-With"] = "XMLHttpRequest";
   config.headers["Accept"] = "*/*";
-  config.headers["authorization"] = await getToken();
+  // config.headers["authorization"] = await getToken();
   return config;
 });
 
