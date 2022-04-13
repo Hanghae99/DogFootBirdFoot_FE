@@ -56,7 +56,7 @@ export const getCommentDB = () => {
       .get(`http://192.168.0.7:8089/api/post/detail/1/comment`)
       .then((res) => {
         console.log(res);
-        dispatch(getComment(res.comment));
+        // dispatch(getComment(re));
       })
       .catch((err) => {
         console.log(err);
@@ -64,13 +64,23 @@ export const getCommentDB = () => {
   };
 };
 
-export const deleteCommentDB = () => {
+export const deleteCommentDB = (comment) => {
+  const token = localStorage.getItem("token");
+
   return async function (dispatch, getState, { history }) {
     await axios
-      .delete(`http://192.168.0.7:8089/api/post/detail/comment/1`)
+      .delete(
+        `http://192.168.0.7:8089/api/post/detail/comment`,
+        { comment },
+        {
+          headers: {
+            Authorization: `${token}`,
+          },
+        }
+      )
       .then((res) => {
         console.log(res);
-        dispatch(deleteComment(res.comment));
+        // dispatch(deleteComment(comment));
       })
       .catch((err) => {
         console.log(err);

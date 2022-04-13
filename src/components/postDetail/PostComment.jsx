@@ -1,15 +1,16 @@
-import React, { useRef, useState } from "react";
+import { React, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useParams, useHistory } from "react-router";
 import styled from "styled-components";
 import {
+  getCommentDB,
   addCommentDB,
-  deleteComment,
+  deleteCommentDB,
   editComment,
 } from "../../redux/modules/comment";
 
 const PostComment = (props) => {
   const [commentValue, setCommentValue] = useState("");
+  const [isOpenUpdate, setIsOpenUpdate] = useState(false);
   const dispatch = useDispatch();
 
   const comment = useSelector((state) => state.comment.comments);
@@ -18,6 +19,11 @@ const PostComment = (props) => {
     const { value } = e.target;
     setCommentValue(value);
   };
+
+  const editBox = () => {
+    setIsOpenUpdate(true);
+  };
+  console.log(isOpenUpdate);
 
   const onAddComment = (e) => {
     e.preventDefault();
@@ -28,7 +34,8 @@ const PostComment = (props) => {
   };
 
   const onDeleteComment = (e) => {
-    dispatch(deleteComment(comment));
+    dispatch(deleteCommentDB(comment));
+    console.log("이제 삭제할거야!");
   };
 
   const onEditComment = (e) => {
@@ -53,7 +60,8 @@ const PostComment = (props) => {
               <h3>{item.nickname}</h3>
               <div>{item.comments}</div>
               <button onClick={onDeleteComment}>삭제</button>
-              <button onClick={onEditComment}>수정</button>
+              <button onClick={editBox}>수정</button>
+              {isOpenUpdate && <textarea onChange={onChange}></textarea>}
               <CreateAt>{item.createdAt}</CreateAt>
             </CommentText>
           </Box>
