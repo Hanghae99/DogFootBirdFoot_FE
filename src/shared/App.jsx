@@ -1,3 +1,4 @@
+import React from "react";
 import PostDetailPage from "../pages/PostDetailPage";
 import Header from "./header/Header";
 
@@ -9,8 +10,19 @@ import LoginPage from "../pages/LoginPage";
 import PostWritePage from "../pages/PostWritePage";
 import SignUpPage from "../pages/SignUpPage";
 import { history } from "../redux/store";
+import { actionCreators as userActions } from "../redux/modules/user";
+import { useDispatch } from "react-redux";
 
 function App() {
+  const dispatch = useDispatch();
+  const token = localStorage.getItem("token") ? true : false;
+
+  React.useEffect(() => {
+    if (token) {
+      dispatch(userActions.isLogin());
+    }
+  }, []);
+
   return (
     <>
       <ConnectedRouter history={history}>

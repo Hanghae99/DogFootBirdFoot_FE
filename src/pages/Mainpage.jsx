@@ -37,7 +37,7 @@ const MainPage = (props) => {
         </Text>
       </Title>
       <Tap>
-        <Search>
+        {/* <Search>
           <Input
             padding="10px"
             margin="10px"
@@ -53,7 +53,7 @@ const MainPage = (props) => {
           >
             검색
           </Button>
-        </Search>
+        </Search> */}
         <Category>
           <Button
             width="auto"
