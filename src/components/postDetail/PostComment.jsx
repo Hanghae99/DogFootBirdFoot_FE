@@ -1,17 +1,17 @@
-import React, { useRef, useState } from "react";
+import { React, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useParams, useHistory } from "react-router";
 import styled from "styled-components";
 import {
+  getCommentDB,
   addCommentDB,
-  deleteComment,
+  deleteCommentDB,
   editComment,
 } from "../../redux/modules/comment";
 
-const PostComment = (props) => {
+const PostComment = ({ comments }) => {
   const [commentValue, setCommentValue] = useState("");
   const dispatch = useDispatch();
-
+  const postId = useSelector((state) => state.post.posts.postId);
   const comment = useSelector((state) => state.comment.comments);
 
   const onChange = (e) => {
@@ -22,13 +22,12 @@ const PostComment = (props) => {
   const onAddComment = (e) => {
     e.preventDefault();
 
-    const comment = commentValue;
-
-    dispatch(addCommentDB(comment));
+    dispatch(addCommentDB(postId, commentValue));
   };
 
   const onDeleteComment = (e) => {
-    dispatch(deleteComment(comment));
+    dispatch(deleteCommentDB(comment));
+    console.log("이제 삭제할거야!");
   };
 
   const onEditComment = (e) => {
@@ -54,6 +53,7 @@ const PostComment = (props) => {
               <div>{item.comments}</div>
               <button onClick={onDeleteComment}>삭제</button>
               <button onClick={onEditComment}>수정</button>
+
               <CreateAt>{item.createdAt}</CreateAt>
             </CommentText>
           </Box>

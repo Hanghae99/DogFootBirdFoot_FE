@@ -16,8 +16,6 @@ const PostList = (props) => {
 
   console.log("포스트리스트", postlist);
   console.log("유저정보", user_info);
-  console.log(user_info.nickname);
-
   // const { history } = props;
 
   React.useEffect(() => {

@@ -12,7 +12,7 @@ import MyPage from "../pages/MyPage";
 import MainPage from "../pages/Mainpage";
 import LoginPage from "../pages/LoginPage";
 import PostWritePage from "../pages/PostWritePage";
-import SignUpPage from "../pages/SignUpPage";
+import SignUpPage from "../pages/SignupPage";
 import { Grid } from "../elements/index";
 
 function App() {
