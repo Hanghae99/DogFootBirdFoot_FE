@@ -1,16 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
-import { getpostAPI } from "../../redux/modules/post";
+import { getpostAPI, deletePostAPI } from "../../redux/modules/post";
 import { Image, Button, Grid } from "../../elements/index";
 import { useHistory } from "react-router-dom";
 
 const PostList = (props) => {
-  React.useEffect(() => {
-    dispatch(getpostAPI());
-  }, []);
-
   const dispatch = useDispatch();
+
   const postlist = useSelector((state) => state.post.posts);
   const user_info = useSelector((state) => state.user);
   const preview = useSelector((state) => state.user.preview);
@@ -19,17 +16,20 @@ const PostList = (props) => {
 
   console.log("포스트리스트", postlist);
   console.log("유저정보", user_info);
+  console.log(user_info.nickname);
 
   // const { history } = props;
+
+  React.useEffect(() => {
+    dispatch(getpostAPI());
+    return () => {};
+  }, []);
 
   return (
     <>
       {postlist.map((item) => {
-        console.log(item);
-        console.log(item.postId);
-
         // 로그인 했고, 로그인한 사람과 작성자가 같은 경우
-        if (item.nickname === user_info?.nickname) {
+        if (item.nickname === user_info.nickname) {
           return (
             <Grid
               margin="20px 0px"
@@ -51,10 +51,6 @@ const PostList = (props) => {
                   {/* <h2>{item.category}</h2> */}
                 </Image>
               </ImageBox>
-              <div>
-                <Button>수정</Button>
-                {/* <Button>상세페이지 이동하기</Button> */}
-              </div>
               <div>
                 <Question>{item.postTitle}</Question>
                 <Comment>

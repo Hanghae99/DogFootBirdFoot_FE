@@ -104,7 +104,7 @@ const isLogin = () => {
     const userProfile = localStorage.getItem("userProfile");
 
     // 토큰이 없거나 유저아이디가 없거나 둘 중 하나면 로그인이 아님
-    if (!token || !userInfo) {
+    if (!token) {
       dispatch(logout());
     }
     console.log(token);

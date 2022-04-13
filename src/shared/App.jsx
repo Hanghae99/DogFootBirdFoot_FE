@@ -19,12 +19,6 @@ function App() {
   const dispatch = useDispatch();
   const token = localStorage.getItem("token") ? true : false;
 
-  React.useEffect(() => {
-    if (token) {
-      dispatch(userActions.isLogin());
-    }
-  }, []);
-
   return (
     <>
       <Grid>

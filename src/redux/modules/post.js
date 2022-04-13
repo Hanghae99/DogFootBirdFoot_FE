@@ -3,6 +3,7 @@ import produce from "immer";
 import moment from "moment";
 import { api } from "../../shared/api";
 import { apis } from "../../shared/api/image";
+import { actionCreators as userActions } from "./user";
 
 // 액션 타입 지정
 const SET_POST = "SET_POST";
@@ -77,6 +78,7 @@ export const addPostAPI = (select, postTitleValue, postContentValue) => {
       .then((res) => {
         console.log(res);
         dispatch(addPost(res.data));
+        dispatch(getpostAPI());
       })
       .catch((err) => {
         console.log(err);
@@ -103,6 +105,29 @@ export const getonepostAPI = (postId) => {
   };
 };
 
+// 5. 게시물 지우기
+export const deletePostAPI = (userId, postId) => {
+  const token = localStorage.getItem("token");
+
+  return async function (dispatch, getState, { history }) {
+    await api
+      .delete(
+        `/post/delete`,
+        { userId: userId, postId: postId },
+        {
+          headers: {
+            Authorization: `${token}`,
+          },
+        }
+      )
+      .then((post) => {
+        console.log(post);
+        // dispatch(deletePost());
+        // dispatch(getpostAPI());
+      });
+  };
+};
+
 // 리듀서
 export default handleActions(
   {
@@ -116,7 +141,10 @@ export default handleActions(
         draft.posts.unshift(action.payload.post);
       }),
 
-    [DELETE_POST]: (state, action) => produce(state, (draft) => {}),
+    [DELETE_POST]: (state, action) =>
+      produce(state, (draft) => {
+        draft.posts.filter((post) => post !== action.payload.post);
+      }),
   },
   initialPost
 );
