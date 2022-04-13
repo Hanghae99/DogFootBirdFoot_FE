@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { getpostAPI } from "../../redux/modules/post";
 import { Image, Button, Grid } from "../../elements/index";
+import { useHistory } from "react-router-dom";
 
 const PostList = (props) => {
   React.useEffect(() => {
@@ -12,28 +13,38 @@ const PostList = (props) => {
   const dispatch = useDispatch();
   const postlist = useSelector((state) => state.post.posts);
   const user_info = useSelector((state) => state.user);
-  const userProfile = useSelector((state) => state.user.userProfile);
+  const preview = useSelector((state) => state.user.preview);
+
+  const history = useHistory();
 
   console.log("포스트리스트", postlist);
   console.log("유저정보", user_info);
 
-  const { history } = props;
+  // const { history } = props;
 
   return (
     <>
       {postlist.map((item) => {
+        console.log(item);
+        console.log(item.postId);
+
         // 로그인 했고, 로그인한 사람과 작성자가 같은 경우
         if (item.nickname === user_info?.nickname) {
           return (
             <Grid
+              margin="20px 0px"
               key={item.postId}
-              _onClick={() => history.push(`/post/detail/${item.postId}`)}
+              _onClick={() =>
+                history.push(`/post/detail/${item.postId}`, {
+                  state: item.postId,
+                })
+              }
             >
               <ImageBox>
                 <Image
                   src={
-                    userProfile
-                      ? userProfile
+                    preview
+                      ? preview
                       : "https://www.newsworks.co.kr/news/photo/202002/433057_327801_345.jpg"
                   }
                 >
@@ -42,7 +53,7 @@ const PostList = (props) => {
               </ImageBox>
               <div>
                 <Button>수정</Button>
-                <Button>상세페이지 이동하기</Button>
+                {/* <Button>상세페이지 이동하기</Button> */}
               </div>
               <div>
                 <Question>{item.postTitle}</Question>
@@ -63,14 +74,19 @@ const PostList = (props) => {
         else {
           return (
             <Grid
+              margin="20px 0px"
               key={item.postId}
-              _onClick={() => history.push(`/post/detail/${item.postId}`)}
+              _onClick={() =>
+                history.push(`/post/detail/${item.postId}`, {
+                  state: item.postId,
+                })
+              }
             >
               <ImageBox>
                 <Image
                   src={
-                    userProfile
-                      ? userProfile
+                    preview
+                      ? preview
                       : "https://www.newsworks.co.kr/news/photo/202002/433057_327801_345.jpg"
                   }
                 >
@@ -78,12 +94,12 @@ const PostList = (props) => {
                 </Image>
               </ImageBox>
               <ContentBox>
-                <Button
+                {/* <Button
                   width="100px"
                   _onClick={() => history.push(`/post/${item.postId}`)}
                 >
                   글 보기
-                </Button>
+                </Button> */}
                 <div>
                   <Question>{item.postTitle}</Question>
                   <Comment>

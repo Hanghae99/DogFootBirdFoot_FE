@@ -6,6 +6,7 @@ import { addPostAPI } from "../../redux/modules/post";
 import { useDispatch } from "react-redux";
 import moment from "moment";
 import { ImageUploadDB } from "../../redux/modules/image";
+import { Grid } from "../../elements/index";
 
 const PostWrite = (props) => {
   const [postTitleValue, setPostTitleValue] = React.useState("");
@@ -55,7 +56,7 @@ const PostWrite = (props) => {
 
   return (
     <>
-      <Total>
+      <Grid>
         <InputLay>
           <div class="dropdown">
             <button className="dropbtn">언어 선택</button>
@@ -87,7 +88,7 @@ const PostWrite = (props) => {
             encType="multipart/form-data"
             method="post"
           >
-            <Input
+            <InputTitle
               type="text"
               placeholder="제목을 입력해주세요"
               onChange={onTitleChange}
@@ -105,7 +106,7 @@ const PostWrite = (props) => {
             <Button>게시하기</Button>
           </form>
         </InputLay>
-      </Total>
+      </Grid>
     </>
   );
 };
@@ -129,15 +130,34 @@ const Button = styled.button`
   margin-top: 20px;
 `;
 
-const Input = styled.input`
+const InputLay = styled.div`
+  width: 100%;
+  padding: 20px;
+  justify-content: center;
+  align-items: center;
+`;
+
+const InputTitle = styled.input`
   display: block;
   justify-content: center;
   align-items: center;
   border-style: none;
-  width: 1030px;
+  width: 80%;
   padding: 20px;
   font-size: large;
   box-shadow: 2px 2px 3px 2px rgba(0, 0, 0, 0.1);
+`;
+
+const InputContents = styled.textarea`
+  display: block;
+  justify-content: center;
+  align-items: center;
+  border-style: none;
+  width: 80%;
+  padding: 20px;
+  font-size: medium;
+  box-shadow: 2px 2px 3px 2px rgba(0, 0, 0, 0.1);
+  margin-top: 10px;
 `;
 
 const InputFile = styled.input`
@@ -147,26 +167,4 @@ const InputFile = styled.input`
   border-style: none;
   width: 1030px;
   padding: 20px;
-`;
-
-const InputContents = styled.textarea`
-  display: block;
-  justify-content: center;
-  align-items: center;
-  border-style: none;
-  width: 1030px;
-  padding: 20px;
-  font-size: medium;
-  box-shadow: 2px 2px 3px 2px rgba(0, 0, 0, 0.1);
-  margin-top: 10px;
-`;
-
-const InputLay = styled.div`
-  width: 800px;
-  padding: 20px;
-`;
-
-const Total = styled.div`
-  display: flex;
-  margin: 0 330px;
 `;
