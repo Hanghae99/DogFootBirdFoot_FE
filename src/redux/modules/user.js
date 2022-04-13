@@ -65,16 +65,16 @@ const signupAPI = (id, nickname, pw, email) => {
       .then((res) => {
         console.log(res);
         window.alert("회원가입이 완료되었습니다. 로그인해주세요!");
-        dispatch(
-          setUser({
-            userId: res.userId,
-            username: res.username,
-            email: res.email,
-            nickname: res.nickname,
-            userProfile: res.userProfile,
-            preview: res.preview,
-          })
-        );
+        // dispatch(
+        //   setUser({
+        //     userId: res.userId,
+        //     username: res.username,
+        //     email: res.email,
+        //     nickname: res.nickname,
+        //     userProfile: res.userProfile,
+        //     preview: res.preview,
+        //   })
+        // );
         history.push("/login");
       })
       .catch((err) => {
@@ -96,36 +96,16 @@ const loginAPI = (id, pw) => {
       .then((res) => {
         console.log(res);
         // 로컬스토리지에 accesstoken 저장
-        localStorage.setItem("token", res.data.token);
+        localStorage.setItem("token", res.headers.authorization);
+        localStorage.setItem("username", res.data.username);
 
-        // 이 부분은 자바스크립트에서 jwt를 디코딩하여 userInfo 를 저장하는 부분
-        // 1. 토큰을 .을 기준으로 split 하고 1번째 값을 불러온다.
-        // jwt에서 0번째는 header, 1번째는 payload, 2번째는 verify signature 이다.
-        // 즉, payload 에 유저 정보가 담겨있으므로 가져오는 것.
-        const base64Payload = res.data.token.split(".")[1];
-
-        // base64는 바이너리 데이터를 6비트 단위로 끊어, 인/디코드 하는 인코딩 기법
-        // 64 = 2의 6제곱 = 6비트
-        // base64payload 를 디코드 하여 buffer 형태의 payload 만듦
-        const payload = Buffer.from(base64Payload, "base64");
-        console.log(payload);
-
-        // JSON.parse() 메서드는 JSON 문자열의 구문을 분석하고, 그 결과에서 JavaScript 값이나 객체를 생성
-        const result = JSON.parse(payload.toString());
-        console.log(result);
-
-        //로컬스토리지에 userId 저장
-        localStorage.setItem("userId", result.userId);
-
-        // result.userID 를 setUser 액션 시 user 에 넣어주는데.. 어떤 값인지 확인해야 한다.
         dispatch(
           setUser({
-            userId: result.userId,
-            username: result.username,
-            email: result.email,
-            nickname: result.nickname,
-            userProfile: result.userProfile,
-            preview: result.preview,
+            //     username: result.username,
+            //     email: result.email,
+            //     nickname: result.nickname,
+            //     userProfile: result.userProfile,
+            //     preview: result.preview,
           })
         );
 
@@ -141,19 +121,17 @@ const loginAPI = (id, pw) => {
 const isLogin = () => {
   return function (dispatch, getState, { history }) {
     const token = localStorage.getItem("token");
-    const userId = localStorage.getItem("userId");
+    const username = localStorage.getItem("username");
 
     // 토큰이 없거나 유저아이디가 없거나 둘 중 하나면 로그인이 아님
-    if (!token || !userId) {
+    if (!token || !username) {
       dispatch(logout());
     }
     console.log(token);
-    console.log(userId);
-    // 로컬스토리지에 userInfo 가 있으면 setUser 에 값 넣어서 디스패치
+    console.log(username);
     dispatch(
-      setUser({
-        username: userId,
-      })
+      // 어딘가에서 setUser 를 위한 정보를 가지고 와야 함. 토큰에 이 정보 있는지 확인 필요
+      setUser({ username: username })
     );
   };
 };
@@ -179,7 +157,7 @@ const uploadImage = (formData) => {
 const logout = () => {
   return function (dispatch, getState, { history }) {
     localStorage.removeItem("token");
-    localStorage.removeItem("userInfo");
+    localStorage.removeItem("username");
     dispatch(logOut());
     history.replace("/");
   };
@@ -224,3 +202,22 @@ const actionCreators = {
 };
 
 export { actionCreators };
+
+// // 이 부분은 자바스크립트에서 jwt를 디코딩하여 userInfo 를 저장하는 부분
+// // 1. 토큰을 .을 기준으로 split 하고 1번째 값을 불러온다.
+// // jwt에서 0번째는 header, 1번째는 payload, 2번째는 verify signature 이다.
+// // 즉, payload 에 유저 정보가 담겨있으므로 가져오는 것.
+// const base64Payload = res.headers.authorization.split(".")[1];
+
+// // base64는 바이너리 데이터를 6비트 단위로 끊어, 인/디코드 하는 인코딩 기법
+// // 64 = 2의 6제곱 = 6비트
+// // base64payload 를 디코드 하여 buffer 형태의 payload 만듦
+// const payload = Buffer.from(base64Payload, "base64");
+// console.log(payload);
+
+// // JSON.parse() 메서드는 JSON 문자열의 구문을 분석하고, 그 결과에서 JavaScript 값이나 객체를 생성
+// const result = JSON.parse(payload.toString());
+// console.log(result);
+
+// //로컬스토리지에 userId 저장
+// localStorage.setItem("userId", result.userId);

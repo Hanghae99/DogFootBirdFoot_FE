@@ -27,7 +27,7 @@ const SignUpPage = (props) => {
       })
       .catch((err) => {
         console.log(err.response);
-        alert(err.response.data.errorMessage);
+        window.alert(err.response);
       });
   };
 
