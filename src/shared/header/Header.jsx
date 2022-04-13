@@ -37,9 +37,9 @@ const Header = (props) => {
   };
 
   //토큰 값으로 로그인여부 한 번 더 체크
-  React.useEffect(() => {
-    dispatch(userActions.isLogin());
-  }, [dispatch]);
+  // React.useEffect(() => {
+  //   dispatch(userActions.isLogin());
+  // }, [dispatch]);
 
   if (is_login && userId) {
     return (

@@ -30,9 +30,10 @@ export const deleteComment = createAction(
 );
 
 //미들웨어
-export const addCommentDB = (comment) => {
+export const addCommentDB = (postsId, comment) => {
   return async function (dispatch, getState, { history }) {
-    axios.post
+    await axios
+      .post(`/api/post/detail/comment`, comment)
       .then((res) => {
         dispatch(addComment(comment));
         console.log(res);
@@ -45,17 +46,18 @@ export const addCommentDB = (comment) => {
 
 export const getCommentDB = () => {
   return async function (dispatch, getState, { history }) {
-    axios
-      .get(`http://192.168.0.7:8085/api/post/detail/comment`)
+    await axios
+      .get(`http://192.168.0.7:8089/api/post/detail/comment`)
       .then((res) => {
-        dispatch(getComment());
         console.log(res);
+        dispatch(getComment(res.commentList.comment));
       })
       .catch((err) => {
         console.log(err);
       });
   };
 };
+
 const initialComment = {
   comments: [
     {

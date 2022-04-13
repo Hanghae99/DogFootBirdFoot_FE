@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useParams, useHistory } from "react-router";
 import styled from "styled-components";
 import {
-  addComment,
+  addCommentDB,
   deleteComment,
   editComment,
 } from "../../redux/modules/comment";
@@ -14,29 +14,25 @@ import { useEffect } from "react";
 const PostComment = (props) => {
   const [commentValue, setCommentValue] = useState("");
   const dispatch = useDispatch();
-  const history = useHistory();
-  const postsId = useParams(); //파라미터
-  const comment = useSelector((state) => state.comment.comments);
 
-  const id = useRef(3); //값이 바껴도 리렌더링이 일어나지않음
+  const postsId = useParams(); //파라미터
+  console.log(postsId);
+  const comment = useSelector((state) => state.comment.comments);
 
   const onChange = (e) => {
     const { value } = e.target; //구조분해할당
     setCommentValue(value);
   };
+
   const onAddComment = (e) => {
     e.preventDefault();
 
-    const data = {
-      id: id.current++,
-      postsId: postsId.postsId,
-      userId: "ssi02014",
-      nickname: "연재몬",
+    const comment = {
+      postsId: postsId,
       comment: commentValue,
-      userProfile: "2021-12-09T10:28:46.000Z",
-      createdAt: moment().format("YYYY-MM-DD hh:mm:ss"),
     };
-    dispatch(addComment(data));
+    console.log(postsId, comment);
+    dispatch(addCommentDB(postsId, comment));
 
     /**
      * data = { postsId, userId, comment }

@@ -76,7 +76,7 @@ const PostWrite = (props) => {
               <button onClick={onClick} value="NODE.JS">
                 NODE.JS
               </button>
-              <button onClick={onClick} value="SPRING">
+              <button onClick={onClick()} value="SPRING">
                 SPRING
               </button>
             </div>

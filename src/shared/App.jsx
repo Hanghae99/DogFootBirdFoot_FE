@@ -19,7 +19,6 @@ function App() {
         <Route path="/mypage" exact component={MyPage} />
         <Route path="/login" exact component={LoginPage} />
         <Route path="/postdetail" exact component={PostDetailPage} />
-        <Route path="/postdetail:id" exact component={PostDetailPage} />
         <Route path="/postwrite" exact component={PostWritePage} />
         <Route path="/signup" exact component={SignUpPage} />
       </ConnectedRouter>
