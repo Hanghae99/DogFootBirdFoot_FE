@@ -1,36 +1,106 @@
 import React from "react";
 import styled from "styled-components";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { getpostAPI } from "../../redux/modules/post";
+import { Image, Button, Grid } from "../../elements/index";
 
 const PostList = (props) => {
-  const postlist = useSelector((state) => state.post.posts);
+  React.useEffect(() => {
+    dispatch(getpostAPI());
+  }, []);
 
-  const user_info = useSelector((state) => state.user.user);
-  console.log(user_info);
-  console.log(postlist);
+  const dispatch = useDispatch();
+  const postlist = useSelector((state) => state.post.posts);
+  const user_info = useSelector((state) => state.user);
+  const userProfile = useSelector((state) => state.user.userProfile);
+
+  console.log("포스트리스트", postlist);
+  console.log("유저정보", user_info);
 
   const { history } = props;
+
   return (
     <>
-      {postlist.map((item) => (
-        <Box key={item.id} onClick={() => history.push(`/post/${item.id}`)}>
-          <LanBox>
-            <h2>{item.category}</h2>
-          </LanBox>
-          <div>
-            <Question>{item.postTitle}</Question>
-            <Comment>
+      {postlist.map((item) => {
+        // 로그인 했고, 로그인한 사람과 작성자가 같은 경우
+        if (item.nickname === user_info?.nickname) {
+          return (
+            <Grid
+              key={item.postId}
+              _onClick={() => history.push(`/post/detail/${item.postId}`)}
+            >
+              <ImageBox>
+                <Image
+                  src={
+                    userProfile
+                      ? userProfile
+                      : "https://www.newsworks.co.kr/news/photo/202002/433057_327801_345.jpg"
+                  }
+                >
+                  {/* <h2>{item.category}</h2> */}
+                </Image>
+              </ImageBox>
               <div>
-                <i className="fa-solid fa-comment-dots"></i> {item.commentCount}
-                개
+                <Button>수정</Button>
+                <Button>상세페이지 이동하기</Button>
               </div>
-              <LikeComment>
-                <i className="fa-solid fa-heart"></i> {item.likeCount}개
-              </LikeComment>
-            </Comment>
-          </div>
-        </Box>
-      ))}
+              <div>
+                <Question>{item.postTitle}</Question>
+                <Comment>
+                  <div>
+                    <i className="fa-solid fa-comment-dots"></i>{" "}
+                    {item.commentCount}개
+                  </div>
+                  <LikeComment>
+                    <i className="fa-solid fa-heart"></i> {item.likeCount}개
+                  </LikeComment>
+                </Comment>
+              </div>
+            </Grid>
+          );
+        }
+        // 로그인 안한 경우 또는 로그인했는데 내 글 아닌 경우
+        else {
+          return (
+            <Grid
+              key={item.postId}
+              _onClick={() => history.push(`/post/detail/${item.postId}`)}
+            >
+              <ImageBox>
+                <Image
+                  src={
+                    userProfile
+                      ? userProfile
+                      : "https://www.newsworks.co.kr/news/photo/202002/433057_327801_345.jpg"
+                  }
+                >
+                  {/* <h2>{item.category}</h2> */}
+                </Image>
+              </ImageBox>
+              <ContentBox>
+                <Button
+                  width="100px"
+                  _onClick={() => history.push(`/post/${item.postId}`)}
+                >
+                  글 보기
+                </Button>
+                <div>
+                  <Question>{item.postTitle}</Question>
+                  <Comment>
+                    <div>
+                      <i className="fa-solid fa-comment-dots"></i>{" "}
+                      {item.commentCount}개
+                    </div>
+                    <LikeComment>
+                      <i className="fa-solid fa-heart"></i> {item.likeCount}개
+                    </LikeComment>
+                  </Comment>
+                </div>
+              </ContentBox>
+            </Grid>
+          );
+        }
+      })}
     </>
   );
 };
@@ -46,16 +116,21 @@ const Box = styled.div`
   padding: 10px;
 `;
 
-const LanBox = styled.div`
-  display: flex;
-  margin-top: 20px;
-  justify-content: center;
-  align-items: center;
-  background-color: #298d49;
-  width: 120px;
-  height: 100px;
-  border-radius: 40%;
-  color: #f9c785;
+const ImageBox = styled.div`
+  display: inline-block;
+  width: 200px;
+  height: 200px;
+  border-radius: 70%;
+  overflow: hidden;
+  margin: 10px;
+`;
+
+const ContentBox = styled.div`
+  display: inline-block;
+  width: 380px;
+  height: 200px;
+  overflow: hidden;
+  margin: 10px;
 `;
 
 const Comment = styled.div`

@@ -3,53 +3,28 @@ import { useSelector, useDispatch } from "react-redux";
 import { useParams, useHistory } from "react-router";
 import styled from "styled-components";
 import {
-  addComment,
+  addCommentDB,
   deleteComment,
   editComment,
 } from "../../redux/modules/comment";
-import moment from "moment";
-import axios from "axios";
-import { useEffect } from "react";
 
 const PostComment = (props) => {
   const [commentValue, setCommentValue] = useState("");
   const dispatch = useDispatch();
-  const history = useHistory();
-  const postsId = useParams(); //파라미터
+
   const comment = useSelector((state) => state.comment.comments);
 
-  const id = useRef(3); //값이 바껴도 리렌더링이 일어나지않음
-
   const onChange = (e) => {
-    const { value } = e.target; //구조분해할당
+    const { value } = e.target;
     setCommentValue(value);
   };
+
   const onAddComment = (e) => {
     e.preventDefault();
 
-    const data = {
-      id: id.current++,
-      postsId: postsId.postsId,
-      userId: "ssi02014",
-      nickname: "연재몬",
-      comment: commentValue,
-      userProfile: "2021-12-09T10:28:46.000Z",
-      createdAt: moment().format("YYYY-MM-DD hh:mm:ss"),
-    };
-    dispatch(addComment(data));
+    const comment = commentValue;
 
-    /**
-     * data = { postsId, userId, comment }
-     */
-
-    // axios
-    //   .post(`/post/${params.postId}`, data)
-    //   .then((res) => {
-    //     dispatch(addComment(res.data.comment));
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
+    dispatch(addCommentDB(comment));
   };
 
   const onDeleteComment = (e) => {
@@ -75,7 +50,7 @@ const PostComment = (props) => {
           <Box key={item.id}>
             <Profile />
             <CommentText>
-              <h3>{item.nickname}</h3>
+              {/* <h3>{item.nickname}</h3> */}
               <div>{item.comment}</div>
               <button onClick={onDeleteComment}>삭제</button>
               <button onClick={onEditComment}>수정</button>
