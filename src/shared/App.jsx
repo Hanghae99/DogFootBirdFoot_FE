@@ -30,8 +30,9 @@ function App() {
         <Route path="/" exact component={MainPage} />
         <Route path="/mypage" exact component={MyPage} />
         <Route path="/login" exact component={LoginPage} />
-        <Route path="/postdetail" exact component={PostDetailPage} />
-        <Route path="/postwrite" exact component={PostWritePage} />
+        <Route path="/post/detail" exact component={PostDetailPage} />
+        <Route path="/post/detail/:postid" exact component={PostDetailPage} />
+        <Route path="/post/write" exact component={PostWritePage} />
         <Route path="/signup" exact component={SignUpPage} />
       </ConnectedRouter>
     </>

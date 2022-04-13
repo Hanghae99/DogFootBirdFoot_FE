@@ -67,7 +67,7 @@ export const getCommentDB = () => {
 export const deleteCommentDB = () => {
   return async function (dispatch, getState, { history }) {
     await axios
-      .delete(`http://192.168.0.7:8089/api/post/detail/comment`)
+      .delete(`http://192.168.0.7:8089/api/post/detail/comment/1`)
       .then((res) => {
         console.log(res);
         dispatch(deleteComment(res.comment));

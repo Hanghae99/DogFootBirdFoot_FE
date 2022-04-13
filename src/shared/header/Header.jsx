@@ -10,11 +10,9 @@ const Header = (props) => {
   const history = useHistory();
   const dispatch = useDispatch();
   //리덕스 데이터 is_login 으로 로그인여부 체크
-  // const is_login = useSelector((state) => state.user.is_login);
+  const is_login = useSelector((state) => state.user.is_login);
   const token = localStorage.getItem("token") ? true : false;
   const nickname = useSelector((state) => state.user.nickname);
-
-  //Header분기
 
   const onClick = (e) => {
     const { name } = e.target;
@@ -36,12 +34,7 @@ const Header = (props) => {
     }
   };
 
-  // 이건 뭐지?
-  // React.useEffect(() => {
-  //   dispatch(userActions.isLogin());
-  // }, []);
-
-  if (token) {
+  if (is_login && token) {
     return (
       <>
         <Wrapper>

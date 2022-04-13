@@ -2,14 +2,13 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 import { api } from "../../shared/api";
-import { apis } from "../../shared/api/image";
 
 // 2. actions(액션 타입)
-const LOG_OUT = "LOG_OUT";
 // const GET_USER = "GET_USER";
 const SET_USER = "SET_USER";
 const SET_PROFILE = "SET_PROFILE";
 const SET_PREVIEW = "SET_PREVIEW";
+const LOG_OUT = "LOG_OUT";
 
 // 3. action creators (액션 생성 함수)
 const setUser = createAction(SET_USER, (user) => ({ user }));
@@ -29,25 +28,6 @@ const initialState = {
   is_login: false,
 };
 
-// 미들웨어 1. 회원가입
-// const idcheckAPI = (id) => {
-//   return function (dispatch, getState, { history }) {
-//     console.log("아이디", id);
-
-//     api
-//       .post("/user/dupliChk", {
-//         username: id,
-//       })
-//       .then((res) => {
-//         console.log(res);
-//         window.alert(res);
-//       })
-//       .catch((err) => {
-//         console.log(err.response);
-//       });
-//   };
-// };
-
 const signupAPI = (id, nickname, pw, email) => {
   return function (dispatch, getState, { history }) {
     console.log("아이디", id);
@@ -65,16 +45,6 @@ const signupAPI = (id, nickname, pw, email) => {
       .then((res) => {
         console.log(res);
         window.alert("회원가입이 완료되었습니다. 로그인해주세요!");
-        // dispatch(
-        //   setUser({
-        //     userId: res.userId,
-        //     username: res.username,
-        //     email: res.email,
-        //     nickname: res.nickname,
-        //     userProfile: res.userProfile,
-        //     preview: res.preview,
-        //   })
-        // );
         history.push("/login");
       })
       .catch((err) => {
@@ -93,19 +63,24 @@ const loginAPI = (id, pw) => {
         username: id,
         password: pw,
       })
-      .then((res) => {
-        console.log(res);
+      .then((data) => {
+        console.log(data);
         // 로컬스토리지에 accesstoken 저장
-        localStorage.setItem("token", res.headers.authorization);
-        localStorage.setItem("username", res.data.username);
+        localStorage.setItem("token", data.headers.authorization);
+        localStorage.setItem("userInfo", data.data);
+        localStorage.setItem("userId", data.data.userId);
+        localStorage.setItem("username", data.data.emaiusernamel);
+        localStorage.setItem("email", data.data.email);
+        localStorage.setItem("nickname", data.data.nickname);
+        localStorage.setItem("userProfile", data.data.userProfile);
 
         dispatch(
           setUser({
-            //     username: result.username,
-            //     email: result.email,
-            //     nickname: result.nickname,
-            //     userProfile: result.userProfile,
-            //     preview: result.preview,
+            userId: data.data.userId,
+            username: data.data.username,
+            email: data.data.email,
+            nickname: data.data.nickname,
+            userProfile: data.data.userProfile,
           })
         );
 
@@ -121,17 +96,23 @@ const loginAPI = (id, pw) => {
 const isLogin = () => {
   return function (dispatch, getState, { history }) {
     const token = localStorage.getItem("token");
-    const username = localStorage.getItem("username");
+    const userInfo = localStorage.getItem("userInfo");
 
     // 토큰이 없거나 유저아이디가 없거나 둘 중 하나면 로그인이 아님
-    if (!token || !username) {
+    if (!token || !userInfo) {
       dispatch(logout());
     }
     console.log(token);
-    console.log(username);
+    console.log(userInfo);
     dispatch(
       // 어딘가에서 setUser 를 위한 정보를 가지고 와야 함. 토큰에 이 정보 있는지 확인 필요
-      setUser({ username: username })
+      setUser({
+        userId: userInfo.userId,
+        username: userInfo.username,
+        email: userInfo.email,
+        nickname: userInfo.nickname,
+        userProfile: userInfo.userProfile,
+      })
     );
   };
 };
@@ -157,7 +138,8 @@ const uploadImage = (formData) => {
 const logout = () => {
   return function (dispatch, getState, { history }) {
     localStorage.removeItem("token");
-    localStorage.removeItem("username");
+    localStorage.removeItem("userId");
+
     dispatch(logOut());
     history.replace("/");
   };
@@ -168,9 +150,14 @@ export default handleActions(
   {
     [SET_USER]: (state, action) =>
       produce(state, (draft) => {
-        draft.username = action.payload.username;
+        draft.userId = action.payload.user.userId;
+        draft.username = action.payload.user.username;
+        draft.email = action.payload.user.email;
+        draft.nickname = action.payload.user.nickname;
+        draft.userProfile = action.payload.user.userProfile;
         draft.is_login = true;
       }),
+
     // [GET_USER]: (state, action) => produce(state, (draft) => {}),
     [SET_PROFILE]: (state, action) =>
       produce(state, (draft) => {
