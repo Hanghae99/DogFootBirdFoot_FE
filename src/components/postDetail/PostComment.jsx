@@ -1,29 +1,95 @@
-import React from "react";
+import React, { useRef, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useParams, useHistory } from "react-router";
 import styled from "styled-components";
+import {
+  addComment,
+  deleteComment,
+  editComment,
+} from "../../redux/modules/comment";
+import moment from "moment";
+import axios from "axios";
+import { useEffect } from "react";
 
 const PostComment = (props) => {
+  const [commentValue, setCommentValue] = useState("");
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const postsId = useParams(); //파라미터
+  const comment = useSelector((state) => state.comment.comments);
+
+  const id = useRef(3); //값이 바껴도 리렌더링이 일어나지않음
+
+  const onChange = (e) => {
+    const { value } = e.target; //구조분해할당
+    setCommentValue(value);
+  };
+  const onAddComment = (e) => {
+    e.preventDefault();
+
+    const data = {
+      id: id.current++,
+      postsId: postsId.postsId,
+      userId: "ssi02014",
+      nickname: "연재몬",
+      comment: commentValue,
+      userProfile: "2021-12-09T10:28:46.000Z",
+      createdAt: moment().format("YYYY-MM-DD hh:mm:ss"),
+    };
+    dispatch(addComment(data));
+
+    /**
+     * data = { postsId, userId, comment }
+     */
+
+    // axios
+    //   .post(`/post/${params.postId}`, data)
+    //   .then((res) => {
+    //     dispatch(addComment(res.data.comment));
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
+  };
+
+  const onDeleteComment = (e) => {
+    dispatch(deleteComment(comment));
+  };
+
+  const onEditComment = (e) => {
+    dispatch(editComment(comment));
+  };
+
   return (
     <>
-      <Wrap>
-        <Input type="text" placeholder="댓글을 남겨주세요 ~!" />
+      <FormContainer onSubmit={onAddComment}>
+        <Input
+          type="text"
+          placeholder="댓글을 남겨주세요 ~!"
+          onChange={onChange}
+        />
         <Button>작성!</Button>
-      </Wrap>
+      </FormContainer>
       <TotalBox>
-        <Box>
-          <Profile />
-          <CommentText>
-            <h3>duswo</h3>
-            <div>개발세발 댓글 테스트입니다 :)</div>
-            <CreateAt>2022-04-05 10:00:00</CreateAt>
-          </CommentText>
-        </Box>
+        {comment.map((item) => (
+          <Box key={item.id}>
+            <Profile />
+            <CommentText>
+              <h3>{item.nickname}</h3>
+              <div>{item.comment}</div>
+              <button onClick={onDeleteComment}>삭제</button>
+              <button onClick={onEditComment}>수정</button>
+              <CreateAt>{item.createdAt}</CreateAt>
+            </CommentText>
+          </Box>
+        ))}
       </TotalBox>
     </>
   );
 };
 export default PostComment;
 
-const Wrap = styled.div`
+const FormContainer = styled.form`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -76,7 +142,7 @@ const Button = styled.button`
 const Box = styled.div`
   display: flex;
   justify-content: left;
-  margin: 20px;
+  margin: 30px;
   padding: 30px;
   border-bottom: 0.5px solid;
   border-color: gray;
