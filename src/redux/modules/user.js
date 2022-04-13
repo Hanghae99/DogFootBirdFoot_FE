@@ -65,11 +65,11 @@ const loginAPI = (id, pw) => {
       })
       .then((data) => {
         console.log(data);
-        // 로컬스토리지에 accesstoken 저장
+        // 로컬스토리지에 token 저장
         localStorage.setItem("token", data.headers.authorization);
         localStorage.setItem("userInfo", data.data);
         localStorage.setItem("userId", data.data.userId);
-        localStorage.setItem("username", data.data.emaiusernamel);
+        localStorage.setItem("username", data.data.usernamel);
         localStorage.setItem("email", data.data.email);
         localStorage.setItem("nickname", data.data.nickname);
         localStorage.setItem("userProfile", data.data.userProfile);
@@ -97,6 +97,11 @@ const isLogin = () => {
   return function (dispatch, getState, { history }) {
     const token = localStorage.getItem("token");
     const userInfo = localStorage.getItem("userInfo");
+    const userId = localStorage.getItem("userId");
+    const username = localStorage.getItem("username");
+    const email = localStorage.getItem("email");
+    const nickname = localStorage.getItem("nickname");
+    const userProfile = localStorage.getItem("userProfile");
 
     // 토큰이 없거나 유저아이디가 없거나 둘 중 하나면 로그인이 아님
     if (!token || !userInfo) {
@@ -107,11 +112,11 @@ const isLogin = () => {
     dispatch(
       // 어딘가에서 setUser 를 위한 정보를 가지고 와야 함. 토큰에 이 정보 있는지 확인 필요
       setUser({
-        userId: userInfo.userId,
-        username: userInfo.username,
-        email: userInfo.email,
-        nickname: userInfo.nickname,
-        userProfile: userInfo.userProfile,
+        userId: userId,
+        username: username,
+        email: email,
+        nickname: nickname,
+        userProfile: userProfile,
       })
     );
   };
@@ -138,7 +143,12 @@ const uploadImage = (formData) => {
 const logout = () => {
   return function (dispatch, getState, { history }) {
     localStorage.removeItem("token");
+    localStorage.removeItem("userInfo");
     localStorage.removeItem("userId");
+    localStorage.removeItem("username");
+    localStorage.removeItem("email");
+    localStorage.removeItem("nickname");
+    localStorage.removeItem("userProfile");
 
     dispatch(logOut());
     history.replace("/");

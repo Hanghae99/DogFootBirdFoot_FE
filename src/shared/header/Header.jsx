@@ -12,7 +12,10 @@ const Header = (props) => {
   //리덕스 데이터 is_login 으로 로그인여부 체크
   const is_login = useSelector((state) => state.user.is_login);
   const token = localStorage.getItem("token") ? true : false;
+  const userInfo = useSelector((state) => state.user);
   const nickname = useSelector((state) => state.user.nickname);
+
+  console.log(userInfo);
 
   const onClick = (e) => {
     const { name } = e.target;

@@ -49,7 +49,7 @@ export const getpostAPI = () => {
 // 2. 메인페이지에서 카테고리 클릭
 export const getCategoryAPI = (category) => {
   return function (dispatch, getState, { history }) {
-    api.get("/board/${category}")((post_list) => {
+    api.get(`/board/${category}`).then((post_list) => {
       dispatch(setPost(post_list));
     });
   };
@@ -84,6 +84,25 @@ export const addPostAPI = (select, postTitleValue, postContentValue) => {
   };
 };
 
+// 4. 상세 게시글 페이지 정보 가져오기
+// 토큰이 없어도 받아와져야 함.
+export const getonepostAPI = (postId) => {
+  const token = localStorage.getItem("token");
+
+  return async function (dispatch, getState, { history }) {
+    await api
+      .get(`/post/detail/${postId}`, {
+        headers: {
+          Authorization: `${token}`,
+        },
+      })
+      .then((post) => {
+        console.log(post.data);
+        dispatch(setPost(post.data));
+      });
+  };
+};
+
 // 리듀서
 export default handleActions(
   {
@@ -95,7 +114,6 @@ export default handleActions(
     [ADD_POST]: (state, action) =>
       produce(state, (draft) => {
         draft.posts.unshift(action.payload.post);
-        console.log(state);
       }),
 
     [DELETE_POST]: (state, action) => produce(state, (draft) => {}),
