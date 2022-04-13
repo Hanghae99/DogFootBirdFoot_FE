@@ -5,6 +5,7 @@ import { ActionCreators } from "../redux/modules/post";
 
 import { useHistory, useParams } from "react-router";
 import { Text, Input, Button } from "../elements/index";
+import { Permit } from "../shared/Permit";
 
 const MainPage = (props) => {
   const history = useHistory();
@@ -111,13 +112,15 @@ const MainPage = (props) => {
 
       <Wrap>
         <PostList />
-        <Button
-          is_float
-          text="+"
-          _onClick={() => {
-            history.push("/post/write");
-          }}
-        ></Button>
+        <Permit>
+          <Button
+            is_float
+            text="+"
+            _onClick={() => {
+              history.push("/post/write");
+            }}
+          ></Button>
+        </Permit>
       </Wrap>
     </>
   );
