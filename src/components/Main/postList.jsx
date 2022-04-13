@@ -5,10 +5,8 @@ import { useSelector } from "react-redux";
 const PostList = (props) => {
   const postlist = useSelector((state) => state.post.posts);
 
-  // user_info 가 뭐가 나오는지 모르겠다
   const user_info = useSelector((state) => state.user.user);
   console.log(user_info);
-
   console.log(postlist);
 
   const { history } = props;

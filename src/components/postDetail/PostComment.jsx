@@ -7,45 +7,24 @@ import {
   deleteComment,
   editComment,
 } from "../../redux/modules/comment";
-import moment from "moment";
-import axios from "axios";
-import { useEffect } from "react";
 
 const PostComment = (props) => {
   const [commentValue, setCommentValue] = useState("");
   const dispatch = useDispatch();
 
-  const postsId = useParams(); //파라미터
-  console.log(postsId);
   const comment = useSelector((state) => state.comment.comments);
 
   const onChange = (e) => {
-    const { value } = e.target; //구조분해할당
+    const { value } = e.target;
     setCommentValue(value);
   };
 
   const onAddComment = (e) => {
     e.preventDefault();
 
-    const comment = {
-      postsId: postsId,
-      comment: commentValue,
-    };
-    console.log(postsId, comment);
-    dispatch(addCommentDB(postsId, comment));
+    const comment = commentValue;
 
-    /**
-     * data = { postsId, userId, comment }
-     */
-
-    // axios
-    //   .post(`/post/${params.postId}`, data)
-    //   .then((res) => {
-    //     dispatch(addComment(res.data.comment));
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
+    dispatch(addCommentDB(comment));
   };
 
   const onDeleteComment = (e) => {
@@ -72,7 +51,7 @@ const PostComment = (props) => {
             <Profile />
             <CommentText>
               <h3>{item.nickname}</h3>
-              <div>{item.comment}</div>
+              <div>{item.comments}</div>
               <button onClick={onDeleteComment}>삭제</button>
               <button onClick={onEditComment}>수정</button>
               <CreateAt>{item.createdAt}</CreateAt>

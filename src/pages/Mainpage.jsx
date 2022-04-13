@@ -3,7 +3,7 @@ import styled from "styled-components";
 import PostList from "../components/Main/postList";
 import { ActionCreators } from "../redux/modules/post";
 
-import { useHistory } from "react-router";
+import { useHistory, useParams } from "react-router";
 import { Text, Input, Button } from "../elements/index";
 
 const MainPage = (props) => {
@@ -31,13 +31,9 @@ const MainPage = (props) => {
 
   return (
     <>
-      <Title>
-        <Text size="36px" bold margin="10px">
-          메인페이지
-        </Text>
-      </Title>
+      <Title></Title>
       <Tap>
-        <Search>
+        {/* <Search>
           <Input
             padding="10px"
             margin="10px"
@@ -53,7 +49,7 @@ const MainPage = (props) => {
           >
             검색
           </Button>
-        </Search>
+        </Search> */}
         <Category>
           <Button
             width="auto"
@@ -114,7 +110,7 @@ const MainPage = (props) => {
           is_float
           text="+"
           _onClick={() => {
-            history.push("/postwrite");
+            history.push("/postwrite/{postId}");
           }}
         ></Button>
       </Wrap>

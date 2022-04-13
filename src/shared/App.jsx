@@ -1,16 +1,28 @@
+import React from "react";
 import PostDetailPage from "../pages/PostDetailPage";
 import Header from "./header/Header";
 
 import { Route } from "react-router-dom"; // 경로설정및 이동을위해 꼭 필요함
 import { ConnectedRouter } from "connected-react-router";
 import MyPage from "../pages/MyPage";
-import MainPage from "../pages/MainPage";
+import MainPage from "../pages/Mainpage";
 import LoginPage from "../pages/LoginPage";
 import PostWritePage from "../pages/PostWritePage";
-import SignUpPage from "../pages/SignUpPage";
+import SignUpPage from "../pages/SignupPage";
 import { history } from "../redux/store";
+import { actionCreators as userActions } from "../redux/modules/user";
+import { useDispatch } from "react-redux";
 
 function App() {
+  const dispatch = useDispatch();
+  const token = localStorage.getItem("token") ? true : false;
+
+  React.useEffect(() => {
+    if (token) {
+      dispatch(userActions.isLogin());
+    }
+  }, []);
+
   return (
     <>
       <ConnectedRouter history={history}>
