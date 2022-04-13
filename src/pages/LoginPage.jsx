@@ -44,7 +44,7 @@ const LoginPage = (props) => {
       <Button
         margin="17px 0px 0px 0px"
         _onClick={() => {
-          console.log("로그인 했어!");
+          console.log("로그인 시도");
           login();
         }}
       >

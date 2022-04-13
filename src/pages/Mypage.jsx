@@ -4,26 +4,40 @@ import PostList from "../components/Main/postList";
 import { Image, Button, Input, Text } from "../elements/index";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as imageActions } from "../redux/modules/image";
+import { actionCreators as userActions } from "../redux/modules/user";
 
 const MyPage = (props) => {
   const fileInput = React.useRef();
   const dispatch = useDispatch();
 
+  const is_login = useSelector((state) => state.user.is_login);
+  const userProfile = useSelector((state) => state.user.userProfile);
+  const preview = useSelector((state) => state.user.preview);
+
   const selectImage = (e) => {
     console.log(e.target.files[0]);
     console.log(fileInput.current.files[0]);
+    const file = fileInput.current.files[0];
 
     const reader = new FileReader();
-    const file = fileInput.current.files[0];
     reader.readAsDataURL(file);
 
     reader.onloadend = () => {
-      console.log(reader.result);
-      dispatch(imageActions.setPreview(reader.result));
+      dispatch(userActions.setPreview(reader.result));
     };
   };
 
-  // 내 포스트, 내 댓글 보기 코드
+  const uploadImage = (e) => {
+    console.log(fileInput.current.files[0]);
+
+    const formData = new FormData();
+    const fileImage = fileInput.current.files[0];
+
+    formData.append("images", fileImage);
+    dispatch(userActions.uploadImage(formData));
+  };
+
+  // 내 포스트, 내 댓글 보기 코드 구현 필요
   const myPost = null;
   const myComment = null;
 
@@ -37,12 +51,19 @@ const MyPage = (props) => {
       <Myinfo>
         <Profile>
           <ImageBox>
-            <Image></Image>
+            <Image
+              src={
+                preview
+                  ? preview
+                  : "https://www.newsworks.co.kr/news/photo/202002/433057_327801_345.jpg"
+              }
+            ></Image>
           </ImageBox>
           <InputFile type="file" onChange={selectImage} ref={fileInput} />
+          <Button _onClick={uploadImage}>업로드하기</Button>
         </Profile>
         <Userinfo>
-          <Input label="성명" width="60%" margin="10px"></Input>
+          <Div label="성명" width="60%" margin="10px"></Div>
           <Input label="아이디" width="60%" margin="10px"></Input>
           <Input label="이메일" width="60%" margin="10px"></Input>
         </Userinfo>
@@ -123,6 +144,8 @@ const Userinfo = styled.div`
   flex-direction: column;
   width: 70%;
 `;
+
+const Div = styled.div``;
 
 const Tap = styled.ul`
   margin: 0px;

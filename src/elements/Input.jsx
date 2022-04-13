@@ -43,7 +43,6 @@ Input.defaultProps = {
   type: "text",
   value: "",
   width: "90%",
-
   margin: false,
   padding: false,
   _onChange: () => {},

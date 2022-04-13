@@ -2,46 +2,51 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 import { api } from "../../shared/api";
-import axios from "axios";
+import { apis } from "../../shared/api/image";
 
 // 2. actions(액션 타입)
 const LOG_OUT = "LOG_OUT";
-const GET_USER = "GET_USER";
+// const GET_USER = "GET_USER";
 const SET_USER = "SET_USER";
+const SET_PROFILE = "SET_PROFILE";
+const SET_PREVIEW = "SET_PREVIEW";
 
 // 3. action creators (액션 생성 함수)
 const setUser = createAction(SET_USER, (user) => ({ user }));
-const getUser = createAction(GET_USER, (user) => ({ user }));
+// const getUser = createAction(GET_USER, (user) => ({ user }));
+const setProfile = createAction(SET_PROFILE, (image) => ({ image }));
+const setPreview = createAction(SET_PREVIEW, (preview) => ({ preview }));
 const logOut = createAction(LOG_OUT, (user) => ({ user }));
 
 // 4. initialState 초기값 설정
 const initialState = {
-  user: null,
+  userId: null, // 서버에서 받아올 값
+  username: null, // id
+  email: null,
+  nickname: null,
+  userProfile: null,
+  preview: null,
   is_login: false,
 };
 
 // 미들웨어 1. 회원가입
-const idcheckAPI = (id) => {
-  return function (dispatch, getState, { history }) {
-    console.log("아이디", id);
+// const idcheckAPI = (id) => {
+//   return function (dispatch, getState, { history }) {
+//     console.log("아이디", id);
 
-    api
-      .post("/user/dupliChk", {
-        username: id,
-      })
-      .then((res) => {
-        console.log(res);
-        // if (res.result === true) {
-        //   window.alert("작성한 id로 가입할 수 있습니다!");
-        // } else {
-        //   window.alert("작성한 id를 사용하는 회원이 이미 있습니다!");
-        // }
-      })
-      .catch((err) => {
-        console.log(err.response);
-      });
-  };
-};
+//     api
+//       .post("/user/dupliChk", {
+//         username: id,
+//       })
+//       .then((res) => {
+//         console.log(res);
+//         window.alert(res);
+//       })
+//       .catch((err) => {
+//         console.log(err.response);
+//       });
+//   };
+// };
 
 const signupAPI = (id, nickname, pw, email) => {
   return function (dispatch, getState, { history }) {
@@ -60,6 +65,16 @@ const signupAPI = (id, nickname, pw, email) => {
       .then((res) => {
         console.log(res);
         window.alert("회원가입이 완료되었습니다. 로그인해주세요!");
+        dispatch(
+          setUser({
+            userId: res.userId,
+            username: res.username,
+            email: res.email,
+            nickname: res.nickname,
+            userProfile: res.userProfile,
+            preview: res.preview,
+          })
+        );
         history.push("/login");
       })
       .catch((err) => {
@@ -81,7 +96,7 @@ const loginAPI = (id, pw) => {
       .then((res) => {
         console.log(res);
         // 로컬스토리지에 accesstoken 저장
-        localStorage.setItem("accesstoken", res.data.token);
+        localStorage.setItem("token", res.data.token);
 
         // 이 부분은 자바스크립트에서 jwt를 디코딩하여 userInfo 를 저장하는 부분
         // 1. 토큰을 .을 기준으로 split 하고 1번째 값을 불러온다.
@@ -100,14 +115,20 @@ const loginAPI = (id, pw) => {
         console.log(result);
 
         //로컬스토리지에 userId 저장
-        localStorage.setItem("userInfo", result.userId);
+        localStorage.setItem("userId", result.userId);
 
         // result.userID 를 setUser 액션 시 user 에 넣어주는데.. 어떤 값인지 확인해야 한다.
         dispatch(
           setUser({
-            user: result.userId,
+            userId: result.userId,
+            username: result.username,
+            email: result.email,
+            nickname: result.nickname,
+            userProfile: result.userProfile,
+            preview: result.preview,
           })
         );
+
         history.push("/");
       })
       .catch((err) => {
@@ -120,20 +141,37 @@ const loginAPI = (id, pw) => {
 const isLogin = () => {
   return function (dispatch, getState, { history }) {
     const token = localStorage.getItem("token");
-    const userInfo = localStorage.getItem("userInfo");
+    const userId = localStorage.getItem("userId");
 
-    // 토큰이 없거나 유저인포가 없거나 둘 중 하나면 로그인이 아님
-    if (!token || !userInfo) {
-      return false;
+    // 토큰이 없거나 유저아이디가 없거나 둘 중 하나면 로그인이 아님
+    if (!token || !userId) {
+      dispatch(logout());
     }
     console.log(token);
-    console.log(userInfo);
+    console.log(userId);
     // 로컬스토리지에 userInfo 가 있으면 setUser 에 값 넣어서 디스패치
     dispatch(
       setUser({
-        user: userInfo,
+        username: userId,
       })
     );
+  };
+};
+
+// 프로필 이미지 업로드
+// form data 형식으로 올려야 함.
+const uploadImage = (formData) => {
+  return async function (dispatch, getState, { history }) {
+    const token = localStorage.getItem("token");
+    await api
+      .post("/mypage/userProfile", formData, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => {
+        // aws 에 저장된 url 돌아오는지 확인
+        console.log(res);
+        dispatch(setProfile(res));
+      });
   };
 };
 
@@ -152,13 +190,22 @@ export default handleActions(
   {
     [SET_USER]: (state, action) =>
       produce(state, (draft) => {
-        draft.user = action.payload.user;
+        draft.username = action.payload.username;
         draft.is_login = true;
       }),
-    [GET_USER]: (state, action) => produce(state, (draft) => {}),
+    // [GET_USER]: (state, action) => produce(state, (draft) => {}),
+    [SET_PROFILE]: (state, action) =>
+      produce(state, (draft) => {
+        draft.userProfile = action.payload.userProfile;
+      }),
+    [SET_PREVIEW]: (state, action) =>
+      produce(state, (draft) => {
+        draft.preview = action.payload.preview;
+        console.log("action.payload.preview", action.payload.preview);
+      }),
     [LOG_OUT]: (state, action) =>
       produce(state, (draft) => {
-        draft.user = null;
+        draft.username = null;
         draft.is_login = false;
       }),
   },
@@ -167,12 +214,13 @@ export default handleActions(
 
 // action creator export
 const actionCreators = {
-  idcheckAPI,
   signupAPI,
   loginAPI,
   setUser,
   isLogin,
-  logOut,
+  setPreview,
+  uploadImage,
+  logout,
 };
 
 export { actionCreators };

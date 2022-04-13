@@ -16,6 +16,7 @@ const Button = (props) => {
     _onClick,
     is_float,
     text,
+    bold,
   } = props;
 
   const styles = {
@@ -56,6 +57,7 @@ Button.defaultProps = {
   border: null,
   children: null,
   text: false,
+  bold: false,
 };
 
 const BasicButton = styled.button`
@@ -63,7 +65,9 @@ const BasicButton = styled.button`
   height: ${(props) => (props.height ? `${props.height};` : "")};
   ${(props) => (props.margin ? `margin:${props.margin};` : "")}
   padding: ${(props) => props.padding};
-  font-size: ${(props) => props.size};
+  // 폰트 사이즈, 크기가 안 먹는다.
+  // font-size: ${(props) => props.size};
+  // font-weight: ${(props) => (props.bold ? "600" : "400")};
   color: ${(props) => props.color};
   border: ${(props) => (props.border ? `${props.border};` : "1px solid #bbb")};
   border-radius: 3px;

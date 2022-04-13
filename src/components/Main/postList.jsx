@@ -3,13 +3,19 @@ import styled from "styled-components";
 import { useSelector } from "react-redux";
 
 const PostList = (props) => {
-  const post = useSelector((state) => state.post.posts);
-  console.log(post);
+  const postlist = useSelector((state) => state.post.posts);
 
+  // user_info 가 뭐가 나오는지 모르겠다
+  const user_info = useSelector((state) => state.user.user);
+  console.log(user_info);
+
+  console.log(postlist);
+
+  const { history } = props;
   return (
     <>
-      {post.map((item) => (
-        <Box key={item.id}>
+      {postlist.map((item) => (
+        <Box key={item.id} onClick={() => history.push(`/post/${item.id}`)}>
           <LanBox>
             <h2>{item.category}</h2>
           </LanBox>

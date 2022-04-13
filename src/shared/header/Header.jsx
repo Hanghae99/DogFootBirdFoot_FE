@@ -4,12 +4,15 @@ import styled from "styled-components";
 
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as userActions } from "../../redux/modules/user";
+import { LoginCheck } from "../LoginCheck";
 
 const Header = (props) => {
   const history = useHistory();
   const dispatch = useDispatch();
+  //리덕스 데이터 is_login 으로 로그인여부 체크
   const is_login = useSelector((state) => state.user.is_login);
-  const userInfo = useSelector((state) => state.user.user);
+  const nickname = useSelector((state) => state.user.nickname);
+  const userId = localStorage.getItem("userId") ? true : false;
 
   //Header분기
 
@@ -26,21 +29,19 @@ const Header = (props) => {
         history.push("/mypage");
         break;
       case "logout":
-        dispatch(userActions.logOut());
+        dispatch(userActions.logout());
         break;
       default:
         return;
     }
   };
 
-  //로그인 여부 확인
+  //토큰 값으로 로그인여부 한 번 더 체크
   React.useEffect(() => {
     dispatch(userActions.isLogin());
   }, [dispatch]);
 
-  //로그인 하기 전
-
-  if (is_login === false) {
+  if (is_login && userId) {
     return (
       <>
         <Wrapper>
@@ -54,34 +55,7 @@ const Header = (props) => {
           </Logo>
 
           <Div>
-            <p>로그인 하고 둘러보는 건 어때요? :) </p>
-            <HeaderButton name="login" onClick={onClick}>
-              로그인
-            </HeaderButton>
-            <HeaderButton name="signup" onClick={onClick}>
-              회원가입
-            </HeaderButton>
-          </Div>
-        </Wrapper>
-      </>
-    );
-  }
-
-  if (is_login === true) {
-    return (
-      <>
-        <Wrapper>
-          <Logo
-            name="logo"
-            onClick={() => {
-              history.push("/");
-            }}
-          >
-            개발세발🐶
-          </Logo>
-
-          <Div>
-            <p>어서오세요, {userInfo}님!</p>
+            <p>어서오세요, {nickname}님!</p>
             <HeaderButton name="mypage" onClick={onClick}>
               마이페이지
             </HeaderButton>
@@ -93,6 +67,32 @@ const Header = (props) => {
       </>
     );
   }
+
+  //로그인 하기 전
+  return (
+    <>
+      <Wrapper>
+        <Logo
+          name="logo"
+          onClick={() => {
+            history.push("/");
+          }}
+        >
+          개발세발🐶
+        </Logo>
+
+        <Div>
+          <p>로그인 하고 둘러보는 건 어때요? :) </p>
+          <HeaderButton name="login" onClick={onClick}>
+            로그인
+          </HeaderButton>
+          <HeaderButton name="signup" onClick={onClick}>
+            회원가입
+          </HeaderButton>
+        </Div>
+      </Wrapper>
+    </>
+  );
 };
 
 export default Header;
