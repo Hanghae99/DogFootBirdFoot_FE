@@ -3,7 +3,7 @@ import styled from "styled-components";
 import PostList from "../components/Main/postList";
 import { ActionCreators } from "../redux/modules/post";
 
-import { useHistory } from "react-router";
+import { useHistory, useParams } from "react-router";
 import { Text, Input, Button } from "../elements/index";
 
 const MainPage = (props) => {

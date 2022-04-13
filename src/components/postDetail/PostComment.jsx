@@ -50,8 +50,8 @@ const PostComment = (props) => {
           <Box key={item.id}>
             <Profile />
             <CommentText>
-              {/* <h3>{item.nickname}</h3> */}
-              <div>{item.comment}</div>
+              <h3>{item.nickname}</h3>
+              <div>{item.comments}</div>
               <button onClick={onDeleteComment}>삭제</button>
               <button onClick={onEditComment}>수정</button>
               <CreateAt>{item.createdAt}</CreateAt>
