@@ -12,7 +12,6 @@ const MainPage = (props) => {
   const [category, setCategory] = React.useState("");
 
   //카테고리 클릭한 값 가져오기
-  // 잘 안되고 있다.
   const onclick = (e) => {
     const { value } = e.target; //구조분해할당
     setCategory(value);
@@ -38,18 +37,6 @@ const MainPage = (props) => {
         </Text>
       </Title>
       <Tap>
-<<<<<<< HEAD
-        <button>JAVA</button>
-        <button>JS</button>
-        <button>SPRING</button>
-        <button>NODE.JS</button>
-        <button>PYTHON</button>
-
-        <div>
-          <input type="text" />
-          <button>검색</button>
-        </div>
-=======
         <Search>
           <Input
             padding="10px"
@@ -119,7 +106,6 @@ const MainPage = (props) => {
             #NODE.js
           </Button>
         </Category>
->>>>>>> 008cdba507c037b2cb79b1ec4d82d853d4d05217
       </Tap>
 
       <Wrap>
