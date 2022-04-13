@@ -19,7 +19,6 @@ const PostList = (props) => {
 
   console.log("포스트리스트", postlist);
   console.log("유저정보", user_info);
-
   // const { history } = props;
 
   return (
