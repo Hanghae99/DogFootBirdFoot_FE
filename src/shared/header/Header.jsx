@@ -15,7 +15,18 @@ const Header = (props) => {
   const userInfo = useSelector((state) => state.user);
   const nickname = useSelector((state) => state.user.nickname);
 
+  console.log(is_login);
+  console.log(token);
   console.log(userInfo);
+  console.log(nickname);
+
+  React.useEffect(() => {
+    if (token) {
+      dispatch(userActions.isLogin());
+    }
+  }, []);
+
+  console.log(is_login);
 
   const onClick = (e) => {
     const { name } = e.target;
