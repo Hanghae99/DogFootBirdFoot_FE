@@ -2,7 +2,7 @@ import React from "react";
 import { useHistory } from "react-router";
 import styled from "styled-components";
 import "./PostWrite.css";
-import { addPost } from "../../redux/modules/post";
+import { addPostAPI } from "../../redux/modules/post";
 import { useDispatch } from "react-redux";
 import moment from "moment";
 import { ImageUploadDB } from "../../redux/modules/image";
@@ -42,17 +42,14 @@ const PostWrite = (props) => {
   const onAddPost = (e) => {
     e.preventDefault();
 
-    const data = {
-      postId: 1,
-      category: "JAVA",
+    const post = {
+      category: select,
       postTitle: postTitleValue,
       postContents: postContentValue,
-      nickname: "YeonnJ",
-      commentCount: 50,
-      likeCount: 500,
-      createdAt: moment().format("YYYY-MM-DD hh:mm:ss"),
+      imageUrl: null,
     };
-    dispatch(addPost(data));
+
+    dispatch(addPostAPI(select, postTitleValue, postContentValue));
     history.push("/");
   };
 

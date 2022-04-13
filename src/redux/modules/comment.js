@@ -14,25 +14,33 @@ export const getComment = createAction(GET_COMMENT, (postId, comments) => ({
   postId,
   comments,
 }));
-export const addComment = createAction(ADD_COMMENT, (comment) => ({
-  comment,
+export const addComment = createAction(ADD_COMMENT, (postId, comments) => ({
+  postId,
+  comments,
 }));
 export const editComment = createAction(
   EDIT_COMMENT,
-  (postId, commentId, newComment) => ({ postId, commentId, newComment })
+  (commentId, newComment) => ({ commentId, newComment })
 );
-export const deleteComment = createAction(
-  DELETE_COMMENT,
-  (postId, commentId) => ({
-    postId,
-    commentId,
-  })
-);
+export const deleteComment = createAction(DELETE_COMMENT, (comment) => ({
+  comment,
+}));
 
 //미들웨어
 export const addCommentDB = (comment) => {
+  const token = localStorage.getItem("token");
+
   return async function (dispatch, getState, { history }) {
-    axios.post
+    await axios
+      .post(
+        `http://121.141.140.148:8089/api/post/detail/1/comment`,
+        { comment },
+        {
+          headers: {
+            Authorization: `${token}`,
+          },
+        }
+      )
       .then((res) => {
         dispatch(addComment(comment));
         console.log(res);
@@ -45,17 +53,32 @@ export const addCommentDB = (comment) => {
 
 export const getCommentDB = () => {
   return async function (dispatch, getState, { history }) {
-    axios
-      .get(`http://192.168.0.7:8085/api/post/detail/comment`)
+    await axios
+      .get(`http://192.168.0.7:8089/api/post/detail/comment`)
       .then((res) => {
-        dispatch(getComment());
         console.log(res);
+        dispatch(getComment(res.commentList.comment));
       })
       .catch((err) => {
         console.log(err);
       });
   };
 };
+
+export const deleteCommentDB = () => {
+  return async function (dispatch, getState, { history }) {
+    await axios
+      .delete(`http://192.168.0.7:8089/api/post/detail/comment`)
+      .then((res) => {
+        console.log(res);
+        dispatch(deleteComment(res.commentList.comment));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+};
+
 const initialComment = {
   comments: [
     {
@@ -92,12 +115,3 @@ export default handleActions(
   },
   initialComment
 );
-
-const actionCreators = {
-  getComment,
-  addComment,
-  editComment,
-  deleteComment,
-};
-
-export { actionCreators };

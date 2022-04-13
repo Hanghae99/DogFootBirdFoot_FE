@@ -13,6 +13,7 @@ const MainPage = (props) => {
 
   //카테고리 클릭한 값 가져오기
   const onclick = (e) => {
+    console.log("테스트");
     const { value } = e.target; //구조분해할당
     setCategory(value);
     console.log(value);
@@ -20,22 +21,17 @@ const MainPage = (props) => {
   };
 
   // 검색하기
-  const search = (e) => {
-    e.preventDefault();
+  // const search = (e) => {
+  //   e.preventDefault();
 
-    const searchData = {
-      category: category,
-      searchWord: searchWord,
-    };
-  };
+  //   const searchData = {
+  //     category: category,
+  //     searchWord: searchWord,
+  //   };
+  // };
 
   return (
     <>
-      <Title>
-        <Text size="36px" bold margin="10px">
-          메인페이지
-        </Text>
-      </Title>
       <Tap>
         {/* <Search>
           <Input
@@ -61,6 +57,7 @@ const MainPage = (props) => {
             padding="10px"
             bg="#FFC000"
             color="white"
+            value="JAVA"
             _onClick={onclick}
           >
             #JAVA
@@ -71,6 +68,7 @@ const MainPage = (props) => {
             padding="10px"
             bg="#F7DF1E"
             color="white"
+            value="JS"
             _onClick={onclick}
           >
             #JS
@@ -81,6 +79,7 @@ const MainPage = (props) => {
             padding="10px"
             bg="#3772A3"
             color="white"
+            value="PYTHON"
             _onClick={onclick}
           >
             #PYTHON
@@ -91,6 +90,7 @@ const MainPage = (props) => {
             padding="10px"
             bg="#6DB33F"
             color="white"
+            value="SPRING"
             _onClick={onclick}
           >
             #SPRING
@@ -101,6 +101,7 @@ const MainPage = (props) => {
             padding="10px"
             bg="#83CD29"
             color="white"
+            value="NODE.js"
             _onClick={onclick}
           >
             #NODE.js
@@ -114,7 +115,7 @@ const MainPage = (props) => {
           is_float
           text="+"
           _onClick={() => {
-            history.push("/postwrite");
+            history.push("/post/write");
           }}
         ></Button>
       </Wrap>
