@@ -8,11 +8,10 @@ import {
   editComment,
 } from "../../redux/modules/comment";
 
-const PostComment = (props) => {
+const PostComment = ({ comments }) => {
   const [commentValue, setCommentValue] = useState("");
-  const [isOpenUpdate, setIsOpenUpdate] = useState(false);
   const dispatch = useDispatch();
-
+  const postId = useSelector((state) => state.post.posts.postId);
   const comment = useSelector((state) => state.comment.comments);
 
   const onChange = (e) => {
@@ -20,17 +19,10 @@ const PostComment = (props) => {
     setCommentValue(value);
   };
 
-  const editBox = () => {
-    setIsOpenUpdate(true);
-  };
-  console.log(isOpenUpdate);
-
   const onAddComment = (e) => {
     e.preventDefault();
 
-    const comment = commentValue;
-
-    dispatch(addCommentDB(comment));
+    dispatch(addCommentDB(postId, commentValue));
   };
 
   const onDeleteComment = (e) => {
@@ -60,8 +52,8 @@ const PostComment = (props) => {
               <h3>{item.nickname}</h3>
               <div>{item.comments}</div>
               <button onClick={onDeleteComment}>삭제</button>
-              <button onClick={editBox}>수정</button>
-              {isOpenUpdate && <textarea onChange={onChange}></textarea>}
+              <button onClick={onEditComment}>수정</button>
+
               <CreateAt>{item.createdAt}</CreateAt>
             </CommentText>
           </Box>

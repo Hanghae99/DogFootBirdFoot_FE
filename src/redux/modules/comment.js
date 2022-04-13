@@ -10,11 +10,11 @@ const EDIT_COMMENT = "EDIT_COMMENT";
 const DELETE_COMMENT = "DELETE_COMMENT";
 
 // Action Creators
-export const getComment = createAction(GET_COMMENT, (postId, comments) => ({
-  postId,
+export const getComment = createAction(GET_COMMENT, (comments) => ({
   comments,
 }));
-export const addComment = createAction(ADD_COMMENT, (comment) => ({
+export const addComment = createAction(ADD_COMMENT, (postId, comment) => ({
+  postId,
   comment,
 }));
 export const editComment = createAction(
@@ -26,13 +26,13 @@ export const deleteComment = createAction(DELETE_COMMENT, (comment) => ({
 }));
 
 //미들웨어
-export const addCommentDB = (comment) => {
+export const addCommentDB = (postId, comment) => {
   const token = localStorage.getItem("token");
 
   return async function (dispatch, getState, { history }) {
     await axios
       .post(
-        `http://121.141.140.148:8089/api/post/detail/1/comment`,
+        `http://121.141.140.148:8089/api/post/detail/${postId}/comment`,
         { comment },
         {
           headers: {
@@ -41,7 +41,7 @@ export const addCommentDB = (comment) => {
         }
       )
       .then((res) => {
-        dispatch(addComment(res.data));
+        dispatch(addComment(postId, res.data));
         console.log(res.data);
       })
       .catch((err) => {
@@ -50,13 +50,19 @@ export const addCommentDB = (comment) => {
   };
 };
 
-export const getCommentDB = () => {
+export const getCommentDB = (postId) => {
+  const token = localStorage.getItem("token");
   return async function (dispatch, getState, { history }) {
     await axios
-      .get(`http://192.168.0.7:8089/api/post/detail/1/comment`)
+      .get(`http://121.141.140.148:8089/api/post/detail/${postId}/comment`, {
+        headers: {
+          Authorization: `${token}`,
+        },
+      })
       .then((res) => {
-        console.log(res);
-        // dispatch(getComment(re));
+        dispatch(getComment(res.data));
+
+        console.log(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -107,7 +113,7 @@ export default handleActions(
   {
     [GET_COMMENT]: (state, action) =>
       produce(state, (draft) => {
-        draft.comments[action.payload.postId] = action.payload.comments;
+        draft.comments = action.payload.comments;
       }),
     [ADD_COMMENT]: (state, action) =>
       produce(state, (draft) => {
