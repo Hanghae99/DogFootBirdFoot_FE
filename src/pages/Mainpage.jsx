@@ -12,7 +12,6 @@ const MainPage = (props) => {
   const [category, setCategory] = React.useState("");
 
   //카테고리 클릭한 값 가져오기
-  // 잘 안되고 있다.
   const onclick = (e) => {
     const { value } = e.target; //구조분해할당
     setCategory(value);

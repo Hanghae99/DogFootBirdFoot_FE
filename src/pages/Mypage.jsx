@@ -121,12 +121,12 @@ const Profile = styled.div`
 `;
 
 const ImageBox = styled.div`
-display: inline-block;
-width: 200px;
-height: 200px;
-border-radius: 70%
-overflow: hidden;
-margin: 10px;
+  display: inline-block;
+  width: 200px;
+  height: 200px;
+  border-radius: 70%;
+  overflow: hidden;
+  margin: 10px;
 `;
 
 const InputFile = styled.input`
@@ -135,8 +135,8 @@ const InputFile = styled.input`
   border-style: none;
   width: 80%;
   padding: 10px;
-  color: "#fff",
-  background-color: "#298D49",
+  color: "#fff";
+  background-color: "#298D49";
 `;
 
 const Userinfo = styled.div`
