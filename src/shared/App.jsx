@@ -8,7 +8,7 @@ import { history } from "../redux/store";
 import { actionCreators as userActions } from "../redux/modules/user";
 import { useDispatch, useSelector } from "react-redux";
 
-import MyPage from "../pages/MyPage";
+import MyPage from "../pages/Mypage";
 import MainPage from "../pages/Mainpage";
 import LoginPage from "../pages/LoginPage";
 import PostWritePage from "../pages/PostWritePage";

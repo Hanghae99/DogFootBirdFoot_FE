@@ -147,6 +147,7 @@ const Title = styled.div`
   display: flex;
   justify-content: center;
 `;
+
 const Tap = styled.ul`
   margin: 0 300px;
   padding: 20px 0px;
