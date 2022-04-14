@@ -104,6 +104,11 @@ const Header = (props) => {
 
 export default Header;
 
+const Img = styled.div`
+  /* background-image: url(../../img/logo.png); */
+  background-color: tomato;
+`;
+
 const Logo = styled.div`
   display: flex;
   justify-content: left;
@@ -125,15 +130,15 @@ const HeaderButton = styled.button`
   color: #fff;
   background-color: #298d49;
   border: 1px solid;
-  border-radius: 25px;
-  padding: 5px 10px;
+  border-radius: 30px;
+  padding: 10px;
 
   & + & {
     margin-left: 15px;
   }
 
   &:hover {
-    color: tomato;
+    color: white;
     font-weight: 600;
   }
 `;

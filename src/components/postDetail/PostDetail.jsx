@@ -9,6 +9,10 @@ const PostDetail = (props) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const postlist = useSelector((state) => state.post.posts);
+  const comment = useSelector((state) => state);
+  console.log(comment.comment.comments);
+
+  const commentLength = comment.comment.comments.length;
 
   console.log(history.location.state.state);
   // console.log(typeof history.location.state.state);
@@ -51,7 +55,6 @@ const PostDetail = (props) => {
 
   return (
     <>
-      if ()
       <Box>
         <LanBox>
           <h2>{postlist.category}</h2>
@@ -66,11 +69,8 @@ const PostDetail = (props) => {
       </Box>
       <Comment>
         <div>
-          <i className="fa-solid fa-comment-dots"></i> {postlist.commentCount}개
+          <i className="fa-solid fa-comment-dots"></i> {commentLength}개
         </div>
-        <LikeComment>
-          <i className="fa-solid fa-heart"></i> {postlist.likeCount}개
-        </LikeComment>
       </Comment>
     </>
   );
@@ -109,10 +109,10 @@ const Comment = styled.div`
   margin: 0 350px;
 `;
 
-const LikeComment = styled.div`
-  margin-left: 20px;
-  color: #f25430;
-`;
+// const LikeComment = styled.div`
+//   margin-left: 20px;
+//   color: #f25430;
+// `;
 
 const LanBox = styled.div`
   display: flex;
