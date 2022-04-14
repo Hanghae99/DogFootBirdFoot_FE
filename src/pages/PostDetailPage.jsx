@@ -8,10 +8,11 @@ import { getCommentDB } from "../redux/modules/comment";
 
 const PostDetailPage = (props) => {
   const postId = useSelector((state) => state.post.posts.postId);
+
   const dispatch = useDispatch();
   const comment = useSelector((state) => state);
-  const postIdNum = postId;
-  console.log(postId);
+
+  console.log(comment);
 
   React.useEffect(() => {
     dispatch(getCommentDB(postId));

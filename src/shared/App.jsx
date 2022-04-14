@@ -8,12 +8,13 @@ import { history } from "../redux/store";
 import { actionCreators as userActions } from "../redux/modules/user";
 import { useDispatch } from "react-redux";
 
-import MyPage from "../pages/MyPage";
+import MyPage from "../pages/Mypage";
 import MainPage from "../pages/Mainpage";
 import LoginPage from "../pages/LoginPage";
 import PostWritePage from "../pages/PostWritePage";
 import SignUpPage from "../pages/SignupPage";
 import { Grid } from "../elements/index";
+import "./App.css";
 
 function App() {
   const dispatch = useDispatch();

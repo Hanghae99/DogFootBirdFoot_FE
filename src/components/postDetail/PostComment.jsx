@@ -8,11 +8,11 @@ import {
   editComment,
 } from "../../redux/modules/comment";
 
-const PostComment = ({ comments }) => {
+const PostComment = (props) => {
   const [commentValue, setCommentValue] = useState("");
   const dispatch = useDispatch();
   const postId = useSelector((state) => state.post.posts.postId);
-  const comment = useSelector((state) => state.comment.comments);
+  const comment_list = useSelector((state) => state.comment.comments);
 
   const onChange = (e) => {
     const { value } = e.target;
@@ -25,14 +25,14 @@ const PostComment = ({ comments }) => {
     dispatch(addCommentDB(postId, commentValue));
   };
 
-  const onDeleteComment = (e) => {
-    dispatch(deleteCommentDB(comment));
-    console.log("이제 삭제할거야!");
-  };
+  // const onDeleteComment = (e) => {
+  //   dispatch(deleteCommentDB(`${item.id}`))
+  //   console.log("이제 삭제할거야!");
+  // };
 
-  const onEditComment = (e) => {
-    dispatch(editComment(comment));
-  };
+  // const onEditComment = (e) => {
+  //   dispatch(editComment(comment));
+  // };
 
   return (
     <>
@@ -45,14 +45,20 @@ const PostComment = ({ comments }) => {
         <Button>작성!</Button>
       </FormContainer>
       <TotalBox>
-        {comment.map((item) => (
+        {comment_list.map((item) => (
           <Box key={item.id}>
             <Profile />
             <CommentText>
               <h3>{item.nickname}</h3>
               <div>{item.comments}</div>
-              <button onClick={onDeleteComment}>삭제</button>
-              <button onClick={onEditComment}>수정</button>
+              <button
+                onClick={(e) => {
+                  dispatch(deleteCommentDB(item.commentId, item.id));
+                }}
+              >
+                삭제
+              </button>
+              {/* <button>수정</button> */}
 
               <CreateAt>{item.createdAt}</CreateAt>
             </CommentText>

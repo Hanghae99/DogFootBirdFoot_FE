@@ -21,9 +21,13 @@ export const editComment = createAction(
   EDIT_COMMENT,
   (commentId, newComment) => ({ commentId, newComment })
 );
-export const deleteComment = createAction(DELETE_COMMENT, (comment) => ({
-  comment,
-}));
+export const deleteComment = createAction(
+  DELETE_COMMENT,
+  (commentId, itemId) => ({
+    commentId,
+    itemId,
+  })
+);
 
 //미들웨어
 export const addCommentDB = (postId, comment) => {
@@ -70,14 +74,13 @@ export const getCommentDB = (postId) => {
   };
 };
 
-export const deleteCommentDB = (comment) => {
+export const deleteCommentDB = (commentId, itemId) => {
   const token = localStorage.getItem("token");
 
   return async function (dispatch, getState, { history }) {
     await axios
       .delete(
-        `http://192.168.0.7:8089/api/post/detail/comment`,
-        { comment },
+        `http://121.141.140.148:8089/api/post/detail/comment/${commentId}`,
         {
           headers: {
             Authorization: `${token}`,
@@ -86,7 +89,9 @@ export const deleteCommentDB = (comment) => {
       )
       .then((res) => {
         console.log(res);
-        // dispatch(deleteComment(comment));
+        console.log(itemId);
+        dispatch(deleteComment(commentId));
+        window.alert("삭제가 완료되었어요!");
       })
       .catch((err) => {
         console.log(err);
@@ -126,7 +131,7 @@ export default handleActions(
       }),
     [DELETE_COMMENT]: (state, action) =>
       produce(state, (draft) => {
-        draft.comments.shift(action.payload.comment);
+        draft.comments.shift((itemId) => itemId !== action.payload.comments);
       }),
   },
   initialComment
