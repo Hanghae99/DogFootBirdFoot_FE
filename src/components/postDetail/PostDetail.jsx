@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams, useHistory } from "react-router-dom";
 import { getonepostAPI, deletePostAPI } from "../../redux/modules/post";
-import { Image, Button, Grid } from "../../elements/index";
+import { Image, Grid } from "../../elements/index";
 
 const PostDetail = (props) => {
   const history = useHistory();
@@ -66,10 +66,10 @@ const PostDetail = (props) => {
 
         <div>
           <Question>{postlist.postContents}</Question>
+          <Button width="5%" height="10%" onClick={onClick}>
+            삭제
+          </Button>
         </div>
-        <Button width="10%" height="10%" _onClick={onClick}>
-          삭제
-        </Button>
       </Box>
       <Comment>
         <div>
@@ -90,20 +90,11 @@ const Box = styled.div`
   padding: 30px;
 `;
 
-// const Img = styled.img`
-//   width: 500px;
-//   height: 350px;
-//   justify-content: center;
-//   display: flex;
-//   align-items: center;
-//   margin-left: 30px;
-// `;
-
 const Question = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 60px;
+  margin-top: 60px;
 `;
 
 const Comment = styled.div`
@@ -113,10 +104,22 @@ const Comment = styled.div`
   margin: 0 350px;
 `;
 
-// const LikeComment = styled.div`
-//   margin-left: 20px;
-//   color: #f25430;
-// `;
+const Button = styled.button`
+  font-size: small;
+  width: 10%;
+  margin-left: 800px;
+  border-style: none;
+  color: #298d49;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  background-color: wheat;
+  padding: 20px;
+  height: 55px;
+  /* margin-top: 10px; */
+  font-weight: 400;
+  font-size: 15px;
+`;
 
 const LanBox = styled.div`
   display: flex;

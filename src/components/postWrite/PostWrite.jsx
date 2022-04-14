@@ -64,21 +64,21 @@ const PostWrite = (props) => {
             <button className="dropbtn">언어 선택</button>
 
             <div className="dropdown-content">
-              <button onClick={onClick} value="JAVA">
+              <Button1 onClick={onClick} value="JAVA">
                 JAVA
-              </button>
-              <button onClick={onClick} value="JS">
+              </Button1>
+              <Button1 onClick={onClick} value="JS">
                 JS
-              </button>
-              <button onClick={onClick} value="PYTHON">
+              </Button1>
+              <Button1 onClick={onClick} value="PYTHON">
                 PYTHON
-              </button>
-              <button onClick={onClick} value="NODE.JS">
+              </Button1>
+              <Button1 onClick={onClick} value="NODE.JS">
                 NODE.JS
-              </button>
-              <button onClick={onClick} value="SPRING">
+              </Button1>
+              <Button1 onClick={onClick} value="SPRING">
                 SPRING
-              </button>
+              </Button1>
             </div>
             <h1 className="language">{select}</h1>
           </div>
@@ -103,7 +103,6 @@ const PostWrite = (props) => {
               placeholder="내용을 입력해주세요"
               onChange={onContentChange}
             />
-            <InputFile type="file" ref={fileInput} onChange={selectFile} />
 
             <Button>게시하기</Button>
           </form>
@@ -162,11 +161,12 @@ const InputContents = styled.textarea`
   margin-top: 10px;
 `;
 
-const InputFile = styled.input`
-  display: block;
-  justify-content: center;
-  align-items: center;
+const Button1 = styled.button`
+  display: flex;
+  justify-content: left;
+  align-items: left;
   border-style: none;
-  width: 1030px;
-  padding: 20px;
+  width: 50px;
+  padding: 10px;
+  /* margin-left: 40px; */
 `;
