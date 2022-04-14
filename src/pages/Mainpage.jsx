@@ -35,34 +35,14 @@ const MainPage = (props) => {
   };
 
   // 검색하기
-  const search = (e) => {
-    e.preventDefault();
-    dispatch(searchAPI(category, searchWord));
-  };
+  // const search = (e) => {
+  //   e.preventDefault();
+  //   dispatch(searchAPI(category, searchWord));
+  // };
 
   return (
     <>
       <Tap>
-        <Search>
-          <Input
-            padding="10px"
-            margin="10px"
-            width="40%"
-            // height="20%"
-            placeholder="검색어를 입력하세요"
-            _onChange={searchWordChange}
-          ></Input>
-          <Button
-            width="40px"
-            height="35px"
-            size="10px"
-            padding="5px"
-            margin="5px"
-            _onClick={search}
-          >
-            검색
-          </Button>
-        </Search>
         <Category>
           <Button
             size="35px"
@@ -143,11 +123,6 @@ const MainPage = (props) => {
   );
 };
 
-const Title = styled.div`
-  display: flex;
-  justify-content: center;
-`;
-
 const Tap = styled.ul`
   margin: 0 300px;
   padding: 20px 0px;
@@ -157,12 +132,6 @@ const Wrap = styled.div`
   margin: 0 310px;
   flex-direction: column;
   padding: 90px 0px 120px 0px;
-`;
-
-const Search = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
 `;
 
 const Category = styled.div`

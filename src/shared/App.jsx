@@ -6,6 +6,7 @@ import { Route } from "react-router-dom"; // 경로설정및 이동을위해 꼭
 import { ConnectedRouter } from "connected-react-router";
 import { history } from "../redux/store";
 import { actionCreators as userActions } from "../redux/modules/user";
+import { getpostAPI } from "../redux/modules/post";
 import { useDispatch, useSelector } from "react-redux";
 
 import MyPage from "../pages/Mypage";
@@ -23,6 +24,7 @@ function App() {
   React.useEffect(() => {
     if (token) {
       dispatch(userActions.isLogin());
+      dispatch(getpostAPI());
     }
   }, []);
 
