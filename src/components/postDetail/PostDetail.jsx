@@ -36,6 +36,7 @@ const PostDetail = (props) => {
   console.log(postIdjson.postId);
 
   const userId = useSelector((state) => state.user.userId);
+  const userIdNum = Number(userId);
 
   React.useEffect(() => {
     const post_idx = postlist.findIndex((p) => p.postId === postIdNum);
@@ -47,10 +48,13 @@ const PostDetail = (props) => {
     dispatch(getonepostAPI(postIdNum));
   }, []);
 
-  // console.log(post);
+  console.log(userIdNum);
+  console.log(typeof userIdNum);
+  console.log(postIdNum);
+  console.log(typeof postIdNum);
 
   const onClick = (e) => {
-    dispatch(deletePostAPI(userId, postIdNum));
+    dispatch(deletePostAPI(postIdNum));
   };
 
   return (

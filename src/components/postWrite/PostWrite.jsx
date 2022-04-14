@@ -13,6 +13,8 @@ const PostWrite = (props) => {
   const [postContentValue, setPostContentValue] = React.useState("");
   const [select, setSelect] = React.useState("");
 
+  console.log(select);
+
   const history = useHistory();
   const dispatch = useDispatch();
 

@@ -4,7 +4,6 @@ import styled from "styled-components";
 
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as userActions } from "../../redux/modules/user";
-import { LoginCheck } from "../LoginCheck";
 
 const Header = (props) => {
   const history = useHistory();
@@ -12,21 +11,10 @@ const Header = (props) => {
   //리덕스 데이터 is_login 으로 로그인여부 체크
   const is_login = useSelector((state) => state.user.is_login);
   const token = localStorage.getItem("token") ? true : false;
-  const userInfo = useSelector((state) => state.user);
   const nickname = useSelector((state) => state.user.nickname);
 
   console.log(is_login);
   console.log(token);
-  console.log(userInfo);
-  console.log(nickname);
-
-  React.useEffect(() => {
-    if (token) {
-      dispatch(userActions.isLogin());
-    }
-  }, []);
-
-  console.log(is_login);
 
   const onClick = (e) => {
     const { name } = e.target;
@@ -119,10 +107,12 @@ const Logo = styled.div`
 
 const Wrapper = styled.div`
   display: flex;
+  width: 100%;
+  padding: 10px 0px;
   justify-content: space-between;
   align-items: center;
   background-color: blanchedalmond;
-  margin: 0 300px;
+  margin: 0px;
 `;
 
 const HeaderButton = styled.button`
@@ -152,7 +142,7 @@ const Div = styled.div`
   display: flex;
   justify-content: right;
   align-items: center;
-  margin: 25px;
+  margin: 0px 50px;
 
   p {
     margin: 0;

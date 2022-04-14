@@ -13,10 +13,11 @@ const Button = (props) => {
     bg,
     border,
     children,
-    _onClick,
     is_float,
     text,
     bold,
+    _onClick,
+    _value,
   } = props;
 
   const styles = {
@@ -28,6 +29,7 @@ const Button = (props) => {
     color: color,
     bg: bg,
     border: border,
+    bold,
   };
 
   if (is_float) {
@@ -40,7 +42,7 @@ const Button = (props) => {
 
   return (
     <React.Fragment>
-      <BasicButton {...styles} onClick={_onClick}>
+      <BasicButton {...styles} onClick={_onClick} value={_value}>
         {children}
       </BasicButton>
     </React.Fragment>
@@ -66,7 +68,7 @@ const BasicButton = styled.button`
   ${(props) => (props.margin ? `margin:${props.margin};` : "")}
   padding: ${(props) => props.padding};
   // 폰트 사이즈, 크기가 안 먹는다.
-  // font-size: ${(props) => props.size};
+  font-size: ${(props) => props.size};
   // font-weight: ${(props) => (props.bold ? "600" : "400")};
   color: ${(props) => props.color};
   border: ${(props) => (props.border ? `${props.border};` : "1px solid #bbb")};

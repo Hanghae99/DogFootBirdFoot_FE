@@ -6,19 +6,25 @@ import { Route } from "react-router-dom"; // 경로설정및 이동을위해 꼭
 import { ConnectedRouter } from "connected-react-router";
 import { history } from "../redux/store";
 import { actionCreators as userActions } from "../redux/modules/user";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import MyPage from "../pages/Mypage";
 import MainPage from "../pages/Mainpage";
 import LoginPage from "../pages/LoginPage";
 import PostWritePage from "../pages/PostWritePage";
-import SignUpPage from "../pages/SignupPage";
+import SignUpPage from "../pages/SignUpPage";
 import { Grid } from "../elements/index";
 import "./App.css";
 
 function App() {
   const dispatch = useDispatch();
   const token = localStorage.getItem("token") ? true : false;
+
+  React.useEffect(() => {
+    if (token) {
+      dispatch(userActions.isLogin());
+    }
+  }, []);
 
   return (
     <>
