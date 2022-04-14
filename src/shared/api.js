@@ -3,7 +3,7 @@ import axios from "axios";
 // axios 인스턴스 생성
 export const api = axios.create(
   {
-    baseURL: "http://121.141.140.148:8089/api",
+    baseURL: "http://13.125.196.128:8080/api",
     headers: {
       "content-type": "application/json;charset=UTF-8",
       accept: "application/json",

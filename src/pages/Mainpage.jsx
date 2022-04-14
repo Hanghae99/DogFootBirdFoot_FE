@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 import { useHistory, useParams } from "react-router";
 import { Text, Input, Button } from "../elements/index";
 import { Permit } from "../shared/Permit";
-import { getCategoryAPI, searchAPI } from "../redux/modules/post";
+import { getCategoryAPI, searchAPI, getpostAPI } from "../redux/modules/post";
 
 const MainPage = (props) => {
   const history = useHistory();
@@ -39,6 +39,10 @@ const MainPage = (props) => {
   //   e.preventDefault();
   //   dispatch(searchAPI(category, searchWord));
   // };
+
+  React.useEffect(() => {
+    dispatch(getpostAPI());
+  }, []);
 
   return (
     <>

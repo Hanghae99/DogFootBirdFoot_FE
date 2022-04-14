@@ -15,13 +15,7 @@ const PostDetail = (props) => {
   const commentLength = comment.comment.comments.length;
 
   console.log(history.location.state.state);
-  // console.log(typeof history.location.state.state);
 
-  // 왠지는 모르지만 props 못 받아옴
-  // const id = props;
-  // console.log(id);
-
-  // useParams 는 받아오긴 하는데 object 형태로 받아옴
   const postId = useParams();
   console.log(postId);
   console.log(typeof postId);
@@ -53,9 +47,9 @@ const PostDetail = (props) => {
   console.log(postIdNum);
   console.log(typeof postIdNum);
 
-  const onClick = (e) => {
-    dispatch(deletePostAPI(postIdNum));
-  };
+  // const onClick = (e) => {
+  //   dispatch(deletePostAPI(postIdNum));
+  // };
 
   return (
     <>
@@ -66,9 +60,9 @@ const PostDetail = (props) => {
 
         <div>
           <Question>{postlist.postContents}</Question>
-          <Button width="5%" height="10%" onClick={onClick}>
+          {/* <Button width="5%" height="10%" onClick={onClick}>
             삭제
-          </Button>
+          </Button> */}
         </div>
       </Box>
       <Comment>

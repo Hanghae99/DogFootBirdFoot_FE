@@ -47,9 +47,6 @@ const PostList = (props) => {
               <Comment>
                 <i className="fa-solid fa-comment-dots"></i> {item.commentCount}
                 개
-                <LikeComment>
-                  <i className="fa-solid fa-heart"></i> {item.likeCount}개
-                </LikeComment>
               </Comment>
             </ContentBox>
           </Grid>

@@ -22,8 +22,12 @@ const SignUpPage = (props) => {
       })
       .then((res) => {
         setIdDup(true);
-        console.log(res);
-        window.alert(res);
+        console.log(res.data.result);
+        if (res.data.result === "true") {
+          window.alert("사용할 수 있는 ID 입니다.");
+        } else {
+          window.alert("사용할 수 없는 ID 입니다.");
+        }
       })
       .catch((err) => {
         console.log(err.response);
@@ -81,7 +85,7 @@ const SignUpPage = (props) => {
       />
       <Button
         margin="10px"
-        bg="#fff2e5"
+        bg="#F2F2F2"
         color="#111111"
         _onClick={() => idcheckAPI(id)}
       >
@@ -121,7 +125,7 @@ const SignUpPage = (props) => {
           setpwCheck(e.target.value);
         }}
       />
-      <Button bold margin="10px" _onClick={signUp}>
+      <Button bold margin="10px" _onClick={signUp} bg="#BFBFBF" color="#111111">
         회원가입
       </Button>
     </SignupWrap>

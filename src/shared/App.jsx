@@ -13,9 +13,8 @@ import MyPage from "../pages/Mypage";
 import MainPage from "../pages/Mainpage";
 import LoginPage from "../pages/LoginPage";
 import PostWritePage from "../pages/PostWritePage";
-import SignUpPage from "../pages/SignupPage";
+import SignUpPage from "../pages/SignUpPage";
 import { Grid } from "../elements/index";
-import "./App.css";
 
 function App() {
   const dispatch = useDispatch();
@@ -24,7 +23,6 @@ function App() {
   React.useEffect(() => {
     if (token) {
       dispatch(userActions.isLogin());
-      dispatch(getpostAPI());
     }
   }, []);
 

@@ -18,16 +18,16 @@ export const deletePost = createAction(DELETE_POST, (post) => ({ post }));
 // 기본값 지정
 const initialPost = {
   posts: [
-    {
-      postId: 1,
-      category: "JAVA",
-      postTitle: "질문테스트입니다",
-      postContents: "내용 테스트입니다",
-      nickname: "YeonnJ",
-      commentCount: 50,
-      likeCount: 500,
-      createdAt: moment().format("YYYY-MM-DD hh:mm:ss"),
-    },
+    // {
+    //   postId: 1,
+    //   category: "JAVA",
+    //   postTitle: "질문테스트입니다",
+    //   postContents: "내용 테스트입니다",
+    //   nickname: "YeonnJ",
+    //   commentCount: 50,
+    //   likeCount: 500,
+    //   createdAt: moment().format("YYYY-MM-DD hh:mm:ss"),
+    // },
   ],
 };
 
