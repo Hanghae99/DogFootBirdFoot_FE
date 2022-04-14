@@ -36,7 +36,7 @@ export const addCommentDB = (postId, comment) => {
   return async function (dispatch, getState, { history }) {
     await axios
       .post(
-        `http://121.141.140.148:8089/api/post/detail/${postId}/comment`,
+        `http://13.125.196.128:8080/api/post/detail/${postId}/comment`,
         { comment },
         {
           headers: {
@@ -58,7 +58,7 @@ export const getCommentDB = (postId) => {
   const token = localStorage.getItem("token");
   return async function (dispatch, getState, { history }) {
     await axios
-      .get(`http://121.141.140.148:8089/api/post/detail/${postId}/comment`, {
+      .get(`http://13.125.196.128:8080/api/post/detail/${postId}/comment`, {
         headers: {
           Authorization: `${token}`,
         },
@@ -80,7 +80,7 @@ export const deleteCommentDB = (commentId, itemId) => {
   return async function (dispatch, getState, { history }) {
     await axios
       .delete(
-        `http://121.141.140.148:8089/api/post/detail/comment/${commentId}`,
+        `http://13.125.196.128:8080/api/post/detail/comment/${commentId}`,
         {
           headers: {
             Authorization: `${token}`,

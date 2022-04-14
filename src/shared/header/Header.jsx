@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as userActions } from "../../redux/modules/user";
 import { Text } from "../../elements/index";
+import logo from "./logo.png";
 
 const Header = (props) => {
   const history = useHistory();
@@ -47,13 +48,11 @@ const Header = (props) => {
               history.push("/");
             }}
           >
-            <Text bold size="20px">
-              개발세발🐶
-            </Text>
+            <img src={logo} alt="logo" width="150" height="150"></img>
           </Logo>
 
           <Div>
-            <Text bold size="20px">
+            <Text margin="0 50px 0 0" bold size="25px" color="#403C34">
               어서오세요, {nickname}님!
             </Text>
             <HeaderButton name="mypage" onClick={onClick}>
@@ -78,20 +77,18 @@ const Header = (props) => {
             history.push("/");
           }}
         >
-          <Text bold size="20px">
-            개발세발🐶
-          </Text>
+          <img src={logo} alt="logo" width="150" height="150"></img>
         </Logo>
 
         <Div>
-          <Text bold size="20px">
+          <Text color="#F2EED8" bold size="30px">
             로그인 하고 둘러보는 건 어때요?{" "}
           </Text>
           <HeaderButton name="login" onClick={onClick}>
-            로그인
+            LOG IN
           </HeaderButton>
           <HeaderButton name="signup" onClick={onClick}>
-            회원가입
+            SIGN UP
           </HeaderButton>
         </Div>
       </Wrapper>
@@ -101,34 +98,31 @@ const Header = (props) => {
 
 export default Header;
 
-const Img = styled.div`
-  /* background-image: url(../../img/logo.png); */
-  background-color: tomato;
-`;
-
 const Logo = styled.div`
   display: flex;
   justify-content: left;
-  margin: 25px;
+  margin: 0 0 0 20px;
   cursor: pointer;
   color: #5f5f5f;
 `;
 
 const Wrapper = styled.div`
   display: flex;
-  width: 100%;
-  padding: 10px 0px;
   justify-content: space-between;
   align-items: center;
-  background-color: blanchedalmond;
+  width: 100%;
+  padding: 10px 0px;
+  background-color: #bf815e;
   margin: 0px;
 `;
 
 const HeaderButton = styled.button`
-  cursor: pointer;
-  color: #fff;
-  background-color: #298d49;
+  // cursor: pointer;
+  color: wheat;
+  font-size: 20px;
+  background-color: #8c7158;
   border: 1px solid;
+  border-style: none;
   border-radius: 30px;
   padding: 10px;
 
@@ -136,16 +130,11 @@ const HeaderButton = styled.button`
     margin-left: 15px;
   }
 
-  &:hover {
-    color: white;
-    font-weight: 600;
-  }
+  // &:hover {
+  //   color: white;
+  //   font-weight: 600;
+  // }
 `;
-
-// const Btn = styled.div`
-//   cursor: pointer;
-//   color: #5f5f5f;
-// `;
 
 const Div = styled.div`
   display: flex;

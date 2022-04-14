@@ -24,7 +24,7 @@ const LoginPage = (props) => {
 
   return (
     <LoginWrap>
-      <Text size="30px" bold margin="0px 0px 30px 0px">
+      <Text size="30px" bold margin="0px 0px 50px 0px">
         로그인
       </Text>
       <Input
@@ -47,6 +47,8 @@ const LoginPage = (props) => {
           console.log("로그인 시도");
           login();
         }}
+        bg="#F2F2F2"
+        color="black"
       >
         로그인
       </Button>
