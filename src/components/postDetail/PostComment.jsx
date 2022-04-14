@@ -25,15 +25,6 @@ const PostComment = (props) => {
     dispatch(addCommentDB(postId, commentValue));
   };
 
-  // const onDeleteComment = (e) => {
-  //   dispatch(deleteCommentDB(`${item.id}`))
-  //   console.log("이제 삭제할거야!");
-  // };
-
-  // const onEditComment = (e) => {
-  //   dispatch(editComment(comment));
-  // };
-
   return (
     <>
       <FormContainer onSubmit={onAddComment}>
@@ -47,21 +38,18 @@ const PostComment = (props) => {
       <TotalBox>
         {comment_list.map((item) => (
           <Box key={item.id}>
-            <Profile />
             <CommentText>
               <h3>{item.nickname}</h3>
               <div>{item.comments}</div>
-              <button
-                onClick={(e) => {
-                  dispatch(deleteCommentDB(item.commentId, item.id));
-                }}
-              >
-                삭제
-              </button>
-              {/* <button>수정</button> */}
-
               <CreateAt>{item.createdAt}</CreateAt>
             </CommentText>
+            <ButtonDel
+              onClick={(e) => {
+                dispatch(deleteCommentDB(item.commentId, item.id));
+              }}
+            >
+              <i className="fa-solid fa-trash"></i>
+            </ButtonDel>
           </Box>
         ))}
       </TotalBox>
@@ -79,9 +67,9 @@ const FormContainer = styled.form`
 
 const TotalBox = styled.div`
   background-color: #f8c684;
-  border-radius: 68px;
+  border-radius: 35px;
   margin: 30px 350px;
-  padding: 5px;
+  /* padding: 5px; */
 `;
 
 const CreateAt = styled.div`
@@ -122,14 +110,28 @@ const Button = styled.button`
 
 const Box = styled.div`
   display: flex;
-  justify-content: left;
+  justify-content: space-between;
   margin: 30px;
   padding: 30px;
-  border-bottom: 0.5px solid;
+  border-bottom: 0.3px solid;
   border-color: gray;
 `;
 
 const CommentText = styled.div`
   display: block;
+  justify-content: space-between;
+  align-items: center;
   margin-left: 25px;
+  margin-top: 15px;
+`;
+
+const ButtonDel = styled.button`
+  display: flex;
+  border-style: none;
+  padding: 20px;
+  height: 55px;
+  margin-top: 10px;
+  background-color: #298d49;
+  color: white;
+  cursor: pointer;
 `;
