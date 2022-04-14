@@ -14,7 +14,7 @@ const Image = (props) => {
     half: half,
   };
 
-  return <ImageCircle {...styles}></ImageCircle>;
+  return <ImageCircle {...styles} src={src}></ImageCircle>;
 };
 
 Image.defaultProps = {

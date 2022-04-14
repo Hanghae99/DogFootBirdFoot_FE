@@ -26,13 +26,13 @@ export const api = axios.create(
 // };
 
 // 인터셉터. 요청을 보내기 전에 수행할 일.
-api.interceptors.request.use(async (config) => {
-  config.headers["Content-Type"] = "application/json; charset=utf-8";
-  config.headers["X-Requested-With"] = "XMLHttpRequest";
-  config.headers["Accept"] = "*/*";
-  // config.headers["authorization"] = await getToken();
-  return config;
-});
+// api.interceptors.request.use(async (config) => {
+//   config.headers["Content-Type"] = "application/json; charset=utf-8";
+//   config.headers["X-Requested-With"] = "XMLHttpRequest";
+//   config.headers["Accept"] = "*/*";
+//   // config.headers["authorization"] = await getToken();
+//   return config;
+// });
 
 // 구성 우선 순위 규칙
 // // 인스턴스 호출 메서드 옵션 > 인스턴스.defaults 설정 옵션 > 인스턴스.create()에 설정된 옵션

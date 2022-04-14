@@ -50,13 +50,30 @@ export const getpostAPI = () => {
 // 2. 메인페이지에서 카테고리 클릭
 export const getCategoryAPI = (category) => {
   return function (dispatch, getState, { history }) {
-    api.get(`/board/${category}`).then((post_list) => {
-      dispatch(setPost(post_list));
+    api.get(`/board/${category}`).then((res) => {
+      console.log(res);
+      dispatch(setPost(res.data));
     });
   };
 };
 
-// 3. addPost
+// 3. 검색
+export const searchAPI = (category, searchWord) => {
+  return function (dispatch, getState, { history }) {
+    api
+      .post(`/board/search`, {
+        data: {
+          category: category,
+          searchWord: searchWord,
+        },
+      })
+      .then((post_list) => {
+        dispatch(setPost(post_list));
+      });
+  };
+};
+
+// 4. 게시물 올리기
 export const addPostAPI = (select, postTitleValue, postContentValue) => {
   const token = localStorage.getItem("token");
   return async function (dispatch, getState, { history }) {
@@ -86,7 +103,7 @@ export const addPostAPI = (select, postTitleValue, postContentValue) => {
   };
 };
 
-// 4. 상세 게시글 페이지 정보 가져오기
+// 5. 상세 게시글 페이지 정보 가져오기
 // 토큰이 없어도 받아와져야 함.
 export const getonepostAPI = (postId) => {
   const token = localStorage.getItem("token");
@@ -105,25 +122,20 @@ export const getonepostAPI = (postId) => {
   };
 };
 
-// 5. 게시물 지우기
-export const deletePostAPI = (userId, postId) => {
+// 6. 게시물 지우기
+export const deletePostAPI = (postId) => {
   const token = localStorage.getItem("token");
 
-  return async function (dispatch, getState, { history }) {
-    await api
-      .delete(
-        `/post/delete`,
-        { userId: userId, postId: postId },
-        {
-          headers: {
-            Authorization: `${token}`,
-          },
-        }
-      )
-      .then((post) => {
-        console.log(post);
-        // dispatch(deletePost());
-        // dispatch(getpostAPI());
+  return function (dispatch, getState, { history }) {
+    api
+      .delete(`/post/delete/${postId}`, {
+        headers: {
+          Authorization: `${token}`,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        // window.location.href = "/";
       });
   };
 };

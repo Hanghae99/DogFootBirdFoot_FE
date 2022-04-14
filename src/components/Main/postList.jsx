@@ -29,23 +29,17 @@ const PostList = (props) => {
         // 로그인 했고, 로그인한 사람과 작성자가 같은 경우
         if (item.nickname === user_info.nickname) {
           return (
-            <Grid
+            <PostBox
               margin="20px 0px"
               key={item.postId}
-              _onClick={() =>
+              onClick={() =>
                 history.push(`/post/detail/${item.postId}`, {
                   state: item.postId,
                 })
               }
             >
               <ImageBox>
-                <Image
-                  src={
-                    preview
-                      ? preview
-                      : "https://www.newsworks.co.kr/news/photo/202002/433057_327801_345.jpg"
-                  }
-                >
+                <Image src={item.imageUrl}>
                   {/* <h2>{item.category}</h2> */}
                 </Image>
               </ImageBox>
@@ -61,16 +55,16 @@ const PostList = (props) => {
                   </LikeComment>
                 </Comment>
               </div>
-            </Grid>
+            </PostBox>
           );
         }
         // 로그인 안한 경우 또는 로그인했는데 내 글 아닌 경우
         else {
           return (
-            <Grid
+            <PostBox
               margin="20px 0px"
               key={item.postId}
-              _onClick={() =>
+              onClick={() =>
                 history.push(`/post/detail/${item.postId}`, {
                   state: item.postId,
                 })
@@ -95,7 +89,11 @@ const PostList = (props) => {
                   글 보기
                 </Button> */}
                 <div>
-                  <Question>{item.postTitle}</Question>
+                  <Question>
+                    <h3>{item.postTitle}</h3>
+                    <br />
+                  </Question>
+
                   <Comment>
                     <div>
                       <i className="fa-solid fa-comment-dots"></i>{" "}
@@ -107,7 +105,7 @@ const PostList = (props) => {
                   </Comment>
                 </div>
               </ContentBox>
-            </Grid>
+            </PostBox>
           );
         }
       })}
@@ -117,7 +115,7 @@ const PostList = (props) => {
 
 export default PostList;
 
-const Box = styled.div`
+const PostBox = styled.div`
   display: flex;
   justify-content: left;
   align-items: center;
@@ -155,6 +153,7 @@ const Question = styled.div`
   justify-content: center;
   align-items: center;
   margin: 30px 60px;
+  font-size: 25px;
 `;
 
 const LikeComment = styled.div`

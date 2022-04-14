@@ -2,6 +2,7 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 import { api } from "../../shared/api";
+import { setPost } from "../modules/post";
 
 // 2. actions(액션 타입)
 // const GET_USER = "GET_USER";
@@ -28,6 +29,8 @@ const initialState = {
   is_login: false,
 };
 
+// 4. 미들웨어
+// 4.1. 회원가입
 const signupAPI = (id, nickname, pw, email) => {
   return function (dispatch, getState, { history }) {
     console.log("아이디", id);
@@ -53,8 +56,7 @@ const signupAPI = (id, nickname, pw, email) => {
   };
 };
 
-// 로그인
-
+// 4.2. 로그인
 const loginAPI = (id, pw) => {
   return function (dispatch, getState, { history }) {
     console.log(id, pw);
@@ -92,7 +94,7 @@ const loginAPI = (id, pw) => {
   };
 };
 
-// isLogin
+// 4.3. isLogin
 const isLogin = () => {
   return function (dispatch, getState, { history }) {
     const token = localStorage.getItem("token");
@@ -122,14 +124,14 @@ const isLogin = () => {
   };
 };
 
-// 프로필 이미지 업로드
-// form data 형식으로 올려야 함.
+// 4.4.1. 마이페이지_프로필 이미지 업로드
+// form data 형식으로 올려야 함
 const uploadImage = (formData) => {
   return async function (dispatch, getState, { history }) {
     const token = localStorage.getItem("token");
     await api
-      .post("/mypage/userProfile", formData, {
-        headers: { Authorization: `Bearer ${token}` },
+      .post("/post/images", formData, {
+        headers: { Authorization: ` ${token}` },
       })
       .then((res) => {
         // aws 에 저장된 url 돌아오는지 확인
@@ -139,7 +141,47 @@ const uploadImage = (formData) => {
   };
 };
 
-// 로그아웃
+// 4.4.2. 마이페이지_내가 쓴 글 불러오기
+export const mypostAPI = () => {
+  const token = localStorage.getItem("token");
+
+  return function (dispatch, getState, { history }) {
+    api
+      .get(`/mypage/mypost`, {
+        headers: {
+          Authorization: `${token}`,
+        },
+      })
+      .then((res) => {
+        dispatch(setPost(res.data));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+};
+
+// 4.4.3. 마이페이지_내가 쓴 댓글
+export const mycommentAPI = () => {
+  const token = localStorage.getItem("token");
+
+  return function (dispatch, getState, { history }) {
+    api
+      .get(`/mypage/mycomment`, {
+        headers: {
+          Authorization: `${token}`,
+        },
+      })
+      .then((res) => {
+        dispatch(setPost(res.data));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+};
+
+// 5. 로그아웃
 const logout = () => {
   return function (dispatch, getState, { history }) {
     localStorage.removeItem("token");
@@ -194,7 +236,8 @@ const actionCreators = {
   setUser,
   isLogin,
   setPreview,
-  uploadImage,
+  // uploadImage,
+  mypostAPI,
   logout,
 };
 

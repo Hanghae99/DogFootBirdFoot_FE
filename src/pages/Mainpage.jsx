@@ -3,43 +3,54 @@ import styled from "styled-components";
 import PostList from "../components/Main/postList";
 import { ActionCreators } from "../redux/modules/post";
 
+import { useDispatch } from "react-redux";
 import { useHistory, useParams } from "react-router";
 import { Text, Input, Button } from "../elements/index";
 import { Permit } from "../shared/Permit";
+import { getCategoryAPI, searchAPI } from "../redux/modules/post";
 
 const MainPage = (props) => {
   const history = useHistory();
+  const dispatch = useDispatch();
+
   const [searchWord, setSearchWord] = React.useState("");
-  const [category, setCategory] = React.useState("");
+  const [category, setCategory] = React.useState("JAVA");
+
+  console.log(category);
+  console.log(typeof category);
+  console.log(searchWord);
+  console.log(typeof searchWord);
 
   //카테고리 클릭한 값 가져오기
-  const onclick = (e) => {
-    console.log("테스트");
+  const onCategoryChange = (e) => {
     const { value } = e.target; //구조분해할당
     setCategory(value);
-    console.log(value);
-    console.log(category);
+
+    dispatch(getCategoryAPI(category));
+  };
+
+  const searchWordChange = (e) => {
+    const { value } = e.target;
+    setSearchWord(value);
   };
 
   // 검색하기
-  // const search = (e) => {
-  //   e.preventDefault();
-
-  //   const searchData = {
-  //     category: category,
-  //     searchWord: searchWord,
-  //   };
-  // };
+  const search = (e) => {
+    e.preventDefault();
+    dispatch(searchAPI(category, searchWord));
+  };
 
   return (
     <>
       <Tap>
-        {/* <Search>
+        <Search>
           <Input
             padding="10px"
             margin="10px"
             width="40%"
+            // height="20%"
             placeholder="검색어를 입력하세요"
+            _onChange={searchWordChange}
           ></Input>
           <Button
             width="40px"
@@ -47,63 +58,69 @@ const MainPage = (props) => {
             size="10px"
             padding="5px"
             margin="5px"
+            _onClick={search}
           >
             검색
           </Button>
-        </Search> */}
+        </Search>
         <Category>
           <Button
-            width="auto"
+            size="35px"
+            width="12%"
             margin="10px"
             padding="10px"
             bg="#FFC000"
             color="white"
-            value="JAVA"
-            _onClick={onclick}
+            _value="JAVA"
+            _onClick={onCategoryChange}
           >
             #JAVA
           </Button>
           <Button
-            width="auto"
+            size="35px"
+            width="12%"
             margin="10px"
             padding="10px"
             bg="#F7DF1E"
             color="white"
-            value="JS"
-            _onClick={onclick}
+            _value="JS"
+            _onClick={onCategoryChange}
           >
             #JS
           </Button>
           <Button
-            width="auto"
+            size="35px"
+            width="15%"
             margin="10px"
             padding="10px"
             bg="#3772A3"
             color="white"
-            value="PYTHON"
-            _onClick={onclick}
+            _value="PYTHON"
+            _onClick={onCategoryChange}
           >
             #PYTHON
           </Button>
           <Button
-            width="auto"
+            size="35px"
+            width="15%"
             margin="10px"
             padding="10px"
             bg="#6DB33F"
             color="white"
-            value="SPRING"
-            _onClick={onclick}
+            _value="SPRING"
+            _onClick={onCategoryChange}
           >
             #SPRING
           </Button>
           <Button
-            width="auto"
+            size="35px"
+            width="15%"
             margin="10px"
             padding="10px"
             bg="#83CD29"
             color="white"
-            value="NODE.js"
-            _onClick={onclick}
+            _value="NODE.js"
+            _onClick={onCategoryChange}
           >
             #NODE.js
           </Button>
@@ -139,8 +156,6 @@ const Wrap = styled.div`
   margin: 0 310px;
   flex-direction: column;
   padding: 90px 0px 120px 0px;
-  // box-shadow: rgba(50, 50, 105, 0.15) 0px 2px 5px 0px,
-  //   rgba(0, 0, 0, 0.05) 0px 1px 1px 0px;
 `;
 
 const Search = styled.div`

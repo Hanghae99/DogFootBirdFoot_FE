@@ -10,6 +10,7 @@ const MyPage = (props) => {
   const fileInput = React.useRef();
   const dispatch = useDispatch();
 
+  const userId = useSelector((state) => state.user.userId);
   const is_login = useSelector((state) => state.user.is_login);
   const userProfile = useSelector((state) => state.user.userProfile);
   const preview = useSelector((state) => state.user.preview);
@@ -37,9 +38,13 @@ const MyPage = (props) => {
     dispatch(userActions.uploadImage(formData));
   };
 
-  // 내 포스트, 내 댓글 보기 코드 구현 필요
-  const myPost = null;
-  const myComment = null;
+  // 내 포스트, 내 댓글 보기
+  const myPost = () => {
+    dispatch(userActions.mypostAPI());
+  };
+  const myComment = () => {
+    dispatch(userActions.mycommentAPI());
+  };
 
   return (
     <>
@@ -48,7 +53,7 @@ const MyPage = (props) => {
           마이페이지
         </Text>
       </Grid>
-      <Myinfo>
+      {/* <Myinfo>
         <Profile>
           <ImageBox>
             <Image
@@ -67,7 +72,7 @@ const MyPage = (props) => {
           <Input label="아이디" width="60%" margin="10px"></Input>
           <Input label="이메일" width="60%" margin="10px"></Input>
         </Userinfo>
-      </Myinfo>
+      </Myinfo> */}
 
       <Wrap>
         <Tap>
