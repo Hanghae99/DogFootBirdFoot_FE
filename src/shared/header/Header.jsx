@@ -4,6 +4,7 @@ import styled from "styled-components";
 
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as userActions } from "../../redux/modules/user";
+import { Text } from "../../elements/index";
 
 const Header = (props) => {
   const history = useHistory();
@@ -46,11 +47,15 @@ const Header = (props) => {
               history.push("/");
             }}
           >
-            개발세발🐶
+            <Text bold size="20px">
+              개발세발🐶
+            </Text>
           </Logo>
 
           <Div>
-            <p>어서오세요, {nickname}님!</p>
+            <Text bold size="20px">
+              어서오세요, {nickname}님!
+            </Text>
             <HeaderButton name="mypage" onClick={onClick}>
               마이페이지
             </HeaderButton>
@@ -73,11 +78,15 @@ const Header = (props) => {
             history.push("/");
           }}
         >
-          개발세발🐶
+          <Text bold size="20px">
+            개발세발🐶
+          </Text>
         </Logo>
 
         <Div>
-          <p>로그인 하고 둘러보는 건 어때요? :) </p>
+          <Text bold size="20px">
+            로그인 하고 둘러보는 건 어때요?{" "}
+          </Text>
           <HeaderButton name="login" onClick={onClick}>
             로그인
           </HeaderButton>
